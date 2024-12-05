@@ -36,7 +36,6 @@ void insertText(std::string text, int width, int height, int xi, int yi, int Fty
     };
     break;
   }
-//WHAT IS MONOXL I DID NOT SIGN UP FOR THIS
 
   int x = xi - (vexDisplayStringWidthGet(string)/2);
   int y = yi + (vexDisplayStringHeightGet(string)/4);
@@ -77,11 +76,7 @@ class lcdButton {
   int yMin;
   int yMax;
   
-  //_________________________________________________________________________
-  //_________________________________________________________________________
   //constructors
-  //_________________________________________________________________________
-  //_________________________________________________________________________
 
   lcdButton(int x, int y, int wide, int tall, std::string chars, std::string colorHex){
     buttonId = nextId;
@@ -217,14 +212,8 @@ class lcdButton {
     hex = "using hue";
     draw();
   }
-  
-
-  //_________________________________________________________________________
-  //_________________________________________________________________________
 
   //Functions
-  //_________________________________________________________________________
-  //_________________________________________________________________________
 
   void setPenColor(std::string input){
     penHex = input;
@@ -313,7 +302,6 @@ class lcdButton {
     insertText(text, width, height, xPos, yPos, font, fontsize, penHue, penHex);
   }
 
-//________________________________________________________________________________________________
 
   bool pressing(){
     if(Brain.Screen.pressing() && Brain.Screen.xPosition() < xMax && Brain.Screen.xPosition() > xMin && Brain.Screen.yPosition() < yMax && Brain.Screen.yPosition() > yMin){

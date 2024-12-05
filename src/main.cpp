@@ -1,29 +1,25 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       Patrick Block                                             */
-/*    Created:      Sun Sep 29 2024                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
+/*
+PORTS:
 
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller          controller                    
-// Drivetrain           drivetrain    1, 2, 4, 5      
-// LBMech            motor         19              
-// ---- END VEXCODE CONFIGURED DEVICES ----
+  Drivetrain left: 12, 13, 14
+  Drivetrain right: 4, 5, 8 
+  Lady brown: 19
+  Intake/conveyor: 18
+
+THREE WIRE CONNECTIONS:
+
+  Mobile goal mechanism: A
+*/
 
 #include "vex.h"
 #include <cmath>
 #include "robot-config.h"
-#include "auton.h"
+#include "autonSelect.h"
 
 using namespace vex;
 
 
-//create variables
+//define variables
 double driveError = 162.5; //set to 90% for 10% overshoot and 110% for 10% undershoot
 double turnError = 162.5; //same as this ^^^
 
@@ -87,9 +83,9 @@ void turnLeft (double turnDistance) {
   turnActual=(((turnDistance) / 100) * turnError);
   Drivetrain.turnFor(left, (turnActual), degrees);
 }
-//end error control
 
-//definitely not stolen joystick curve code
+
+//joystick curve math
 int turningCurve = 20;
 bool turningRed = true;
 
@@ -109,6 +105,7 @@ int curveJoystick(bool red, int input, double t){
   return val;
 }
 
+//define some macros
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
@@ -122,7 +119,17 @@ void liftMacro() {
   }
 }
 
-/*
+void MogoCode() {
+  if (MogoClamp.value() == false) {
+    MogoClamp.set(true);
+  } else if (MogoClamp.value() == true) {
+    MogoClamp.set(false);
+  } else {
+    
+  }
+}
+
+/* 
 void doinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
@@ -138,16 +145,6 @@ void doinkCode() {
   }
 }
 */
-
-void MogoCode() {
-  if (MogoClamp.value() == false) {
-    MogoClamp.set(true);
-  } else if (MogoClamp.value() == true) {
-    MogoClamp.set(false);
-  } else {
-    
-  }
-}
 
 /*
 void IntakeLiftCode() {
@@ -318,8 +315,6 @@ void autonCode(void) {
     turnRight(135);
     wait(2, msec);
     driveReverse(16);
-  } else {
-    
   }
 
 
