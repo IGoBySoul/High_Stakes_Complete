@@ -1,13 +1,10 @@
 /*
 PORTS:
-
   Drivetrain left: 12, 13, 14
   Drivetrain right: 4, 5, 8 
   Lady brown: 19
   Intake/conveyor: 18
-
 THREE WIRE CONNECTIONS:
-
   Mobile goal mechanism: A
 */
 
@@ -130,6 +127,7 @@ void MogoCode() {
 }
 
 /* 
+
 void doinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
