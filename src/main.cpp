@@ -129,6 +129,14 @@ void MogoCode() {
 
 void doinkCode() {
   if (Doinker.value() == false) {
+    Doinker.set(true);
+  } else {
+    Doinker.set(false);
+  }
+}
+
+/*void doinkCode() {
+  if (Doinker.value() == false) {
     if (doinkCount < 4) {
       Doinker.set(true);
       doinkCount = doinkCount + 1;
@@ -140,7 +148,7 @@ void doinkCode() {
   } else {
 
   }
-}
+}*/
 
 /*
 void IntakeLiftCode() {
