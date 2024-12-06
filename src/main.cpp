@@ -1,14 +1,12 @@
 /*
 PORTS:
-
   Drivetrain left: 12, 13, 14
   Drivetrain right: 4, 5, 8 
   Lady brown: 19
   Intake/conveyor: 18
-
 THREE WIRE CONNECTIONS:
-
   Mobile goal mechanism: A
+  Doinker: B
 */
 
 #include "vex.h"
@@ -129,7 +127,6 @@ void MogoCode() {
   }
 }
 
-/* 
 void doinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
@@ -144,7 +141,6 @@ void doinkCode() {
 
   }
 }
-*/
 
 /*
 void IntakeLiftCode() {
@@ -336,7 +332,7 @@ void driverControl(void) {
   //simple stuff really
   printTeamLogo();
   Controller.ButtonL2.pressed(liftMacro);
-  //Controller.ButtonL2.pressed(doinkCode);
+  Controller.ButtonL2.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
   //Controller.ButtonY.pressed(IntakeLiftCode);
   //Controller.ButtonDown.pressed(colorSortToggle);
