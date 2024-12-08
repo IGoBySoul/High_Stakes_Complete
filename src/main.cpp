@@ -6,6 +6,7 @@ PORTS:
   Intake/conveyor: 18
 THREE WIRE CONNECTIONS:
   Mobile goal mechanism: A
+  Doinker: B
 */
 
 #include "vex.h"
@@ -126,9 +127,15 @@ void MogoCode() {
   }
 }
 
-/* 
-
 void doinkCode() {
+  if (Doinker.value() == false) {
+    Doinker.set(true);
+  } else {
+    Doinker.set(false);
+  }
+}
+
+/*void doinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
       Doinker.set(true);
@@ -141,8 +148,7 @@ void doinkCode() {
   } else {
 
   }
-}
-*/
+}*/
 
 /*
 void IntakeLiftCode() {
@@ -334,7 +340,7 @@ void driverControl(void) {
   //simple stuff really
   printTeamLogo();
   Controller.ButtonL2.pressed(liftMacro);
-  //Controller.ButtonL2.pressed(doinkCode);
+  Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
   //Controller.ButtonY.pressed(IntakeLiftCode);
   //Controller.ButtonDown.pressed(colorSortToggle);
