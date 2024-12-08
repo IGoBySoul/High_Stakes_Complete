@@ -5,8 +5,8 @@ PORTS:
   Lady brown: 19
   Intake/conveyor: 18
 THREE WIRE CONNECTIONS:
-  Mobile goal mechanism: A
-  Doinker: B
+  Mobile goal mechanism: ThreeWireA
+  Doinker: ThreeWireB
 */
 
 #include "vex.h"
@@ -26,27 +26,30 @@ int colorSort = 1;
 int aselection = -1;
 
 
-//joystick curve math
-int turningCurve = 20;
-bool turningRed = true;
+// Joystick curve math
+int turningCurve = 20; // Turning curve intensity
+bool turningRed = true; // Flag for turning curve type (red or blue)
 
-int forwardCurve = 20;
-bool forwardRed = true;
+int forwardCurve = 20; // Forward curve intensity
+bool forwardRed = true; // Flag for forward curve type (red or blue)
 
-//graph of red and blue lines here
-//https://www.desmos.com/calculator/sdcgzah5ya
+// Function to apply a curve to joystick input
+// red: flag to determine which curve to use (red or blue)
+// input: joystick input value
+// t: curve intensity
 int curveJoystick(bool red, int input, double t){
   int val = 0;
   if(red){
+    // Apply red curve
     val = (std::exp(-t/10)+std::exp((std::abs(input)-100)/10)*(1-std::exp(-t/10))) * input;
   }else{
-    //blue
+    // Apply blue curve
     val = std::exp(((std::abs(input)-100)*t)/1000) * input;
   }
   return val;
 }
 
-//define some macros
+// Define some macros
 void printTeamLogo() {
   if (aselection == 0) {
     Brain.Screen.setPenColor(red);
@@ -96,10 +99,8 @@ void liftMacro() {
 void MogoCode() {
   if (MogoClamp.value() == false) {
     MogoClamp.set(true);
-  } else if (MogoClamp.value() == true) {
-    MogoClamp.set(false);
   } else {
-    
+    MogoClamp.set(false);
   }
 }
 
