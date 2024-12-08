@@ -27,10 +27,125 @@ void turnLeft (double turnDistance) {
 
 
 
-///////BEGIN AUTON PATHS///////
+///////AUTON PATHS///////
 
 void skillsAuton() {
+  Drivetrain.driveFor(reverse, 8, inches, false);
+  wait(1000, msec);
+  IntakeMotor.spinFor(forward, 1, seconds);
+  wait(2, msec);
+  driveForward(16);
+  wait(2, msec);
 
+  turnLeft(90);
+  wait(2, msec);
+  driveReverse(24);
+  wait(2, msec);
+  MogoClamp.set(true);
+  wait(2, msec);
+
+  turnLeft(90);
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(2, msec);
+  driveForward(24);
+  wait(2, msec);
+
+  turnRight(60);
+  wait(2, msec);
+  driveForward(36);
+  wait(2, msec);
+
+  turnLeft(80);
+  wait(2, msec);
+  driveForward(24);
+  wait(500, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  turnRight(30);
+  wait(2, msec);
+  driveReverse(24);
+  wait(2, msec);
+  turnLeft(90);
+  wait(2, msec);
+  Drivetrain.drive(forward);
+  wait(1500, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  LBMech.spinFor(forward, 1.5, seconds);
+  wait(2, msec);
+
+  driveReverse(16);
+  wait(2, msec);
+  turnRight(90);
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(2, msec);
+  driveForward(48);
+  wait(1000, msec);
+
+  driveForward(8);
+  wait(2, msec);
+  driveReverse(16);
+  wait(2, msec);
+  
+  turnLeft(45);
+  wait(2, msec);
+  driveForward(10);
+  wait(2, msec);
+
+  turnLeft(180);
+  wait(2, msec);
+  Drivetrain.drive(reverse);
+  wait(1500, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  MogoClamp.set(false);
+  wait(2, msec);
+  driveReverse(16);
+  wait(2, msec);
+
+  turnLeft(45); //allign with wall
+  wait(2, msec);
+  Drivetrain.drive(forward);
+  wait(1500, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  driveForward(16);
+  wait(2, msec);
+
+  //START GREEN PATH//
+
+  turnRight(45);
+  wait(2, msec);
+  driveForward(67);
+  wait(2, msec);
+  IntakeMotor.spinFor(forward, 0.5, seconds);
+  wait(2, msec);
+
+  turnLeft(90);
+  wait(2, msec);
+  driveForward(36);
+  wait(2, msec);
+  IntakeMotor.spinFor(forward, 0.75, seconds);
+  wait(2, msec);
+
+  turnRight(135);
+  wait(2, msec);
+  driveReverse(24);
+  wait(2, msec);
+  MogoClamp.set(true);
+  wait(2, msec);
+
+  turnLeft(45);
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(2, msec);
+  driveForward(32);
+  wait(2, msec);
+  
+  turnLeft(135); //grab 4th green ring
 }
 
 void redNegativeAuton() {
@@ -234,15 +349,18 @@ void redNegativeElimsAuto() {
   driveReverse(8);
   wait(2, msec);
 
-  turnLeft(135);
+  turnLeft(135); //scores fourth ring
   wait(2, msec);
   driveForward(46);
   wait(500, msec);
   driveReverse(16);
   wait(2, msec);
-  turnLeft(135);
+
+  turnLeft(135); //drives to ending position
   wait(2, msec);
   driveForward(48);
+  wait(2, msec);
+  IntakeMotor.stop();
 }
 
 void blueNegativeElimsAuto() {
@@ -274,15 +392,18 @@ void blueNegativeElimsAuto() {
   driveReverse(8);
   wait(2, msec);
 
-  turnRight(135);
+  turnRight(135); //scores fourth ring
   wait(2, msec);
   driveForward(46);
   wait(500, msec);
   driveReverse(16);
   wait(2, msec);
-  turnRight(135);
+
+  turnRight(135); //drives to ending position
   wait(2, msec);
   driveForward(48);
+  wait(2, msec);
+  IntakeMotor.stop();
 }
 
 void redPositiveElimsAuto() {
