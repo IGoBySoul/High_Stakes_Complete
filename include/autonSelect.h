@@ -17,6 +17,7 @@ lcdButton redNeg(xplace,135,120,40, "Red Negative", "#FF2525", "#FFFFFF", 2);//,
 lcdButton redPos(xplace,180,120,40, "Red Positive", "#FF2525", "#FFFFFF", 2);//, color(255, 33, 33));
 lcdButton blueNeg(1000,135,120,40, "Blue Negative", "#2525FF", "#FFFFFF", 2); //figure out color scheme
 lcdButton bluePos(1000,180,120,40, "Blue Positive", "#2525FF", "#FFFFFF", 2);
+//TODO: add elims auton select
 
 lcdButton skills(xplace,225,120,40, "Skills", "#252525");
 

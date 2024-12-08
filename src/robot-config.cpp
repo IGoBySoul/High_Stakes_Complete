@@ -13,12 +13,12 @@ controller Controller = controller(primary);
 motor leftMotorA = motor(PORT12, ratio6_1, true);
 motor leftMotorB = motor(PORT13, ratio6_1, true);
 motor leftMotorC = motor(PORT14, ratio6_1, true);
-motor_group LeftDriveSmart = motor_group(leftMotorA, leftMotorB, leftMotorC);
+motor_group LeftDrive = motor_group(leftMotorA, leftMotorB, leftMotorC);
 motor rightMotorA = motor(PORT4, ratio6_1, false);
 motor rightMotorB = motor(PORT5, ratio6_1, false);
 motor rightMotorC = motor(PORT8, ratio6_1, false);
-motor_group RightDriveSmart = motor_group(rightMotorA, rightMotorB, rightMotorC);
-drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 319.19, 295, 40, mm, 1);
+motor_group RightDrive = motor_group(rightMotorA, rightMotorB, rightMotorC);
+drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 319.19, 295, 40, mm, 1);
 
 //other devices
 motor LBMech = motor(PORT19, ratio18_1, false);

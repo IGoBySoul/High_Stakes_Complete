@@ -178,8 +178,8 @@ void driverControl(void) {
     double turnVolts = turnVal * 0.12; //Converts to voltage
     double forwardVolts = forwardVal * 0.12; //Converts to voltage
 
-    LeftDriveSmart.spin(forward, forwardVolts + turnVolts, voltageUnits::volt); //Apply Via Voltage
-    RightDriveSmart.spin(forward, forwardVolts - turnVolts, voltageUnits::volt);
+    LeftDrive.spin(forward, forwardVolts + turnVolts, voltageUnits::volt); //Apply Via Voltage
+    RightDrive.spin(forward, forwardVolts - turnVolts, voltageUnits::volt);
 
 
     if (Controller.ButtonR1.pressing()) {
@@ -292,6 +292,14 @@ int main() {
         case 4: Brain.Screen.printAt(200, 200, "Blue Pos");
           break;
         case 5: Brain.Screen.printAt(200, 200, "skills auton");
+          break;
+        case 6: Brain.Screen.printAt(200, 200, "Red Neg Elims");
+          break;
+        case 7: Brain.Screen.printAt(200, 200, "Blue Neg Elims");
+          break;
+        case 8: Brain.Screen.printAt(200, 200, "Red Pos Elims");
+          break;
+        case 9: Brain.Screen.printAt(200, 200, "Blue Pos Elims");
           break;
       }
       if(confirm.pressing()){
