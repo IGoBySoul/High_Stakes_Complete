@@ -126,35 +126,6 @@ void doinkCode() {
   }
 }*/
 
-/*
-void IntakeLiftCode() {
-  if (IntakeLift.value() == false) {
-    if (intakeLiftCount < 4) {
-      IntakeLift.set(true);
-      intakeLiftCount = intakeLiftCount + 1;
-    } else {
-
-    }
-  } else if (IntakeLift.value() == true) {
-    IntakeLift.set(false);
-  } else {
-
-  }
-}
-*/
-
-/*void colorSortToggle() {
-  if (colorSort == 1) {
-    colorSort = 0;
-  } else if (colorSort == 0) {
-    colorSort = 1;
-  } else {
-    colorSort = 1;
-  }
-}*/
-
-
-
 
 //AUTON CODE//
 void autonCode(void) {
