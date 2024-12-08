@@ -151,6 +151,14 @@ void autonCode(void) {
     bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
     skillsAuton();
+  } else if (aselection == 6) { //red neg elims auton
+    redNegativeElimsAuto();
+  } else if (aselection == 7) { //blue neg elims auton
+    blueNegativeElimsAuto();
+  } else if (aselection == 8) { //red pos elims auton
+    redPositiveElimsAuto();
+  } else if (aselection == 9) { //blue pos elims auton
+    bluePositiveElimsAuto();
   }
 }
 
@@ -238,6 +246,10 @@ int main() {
         redPos.moveTo(xplace,redPos.yPos);
         blueNeg.moveTo(1000,blueNeg.yPos);
         bluePos.moveTo(1000,bluePos.yPos);
+        redNegElims.moveTo(xplace2, redNegElims.yPos);
+        redPosElims.moveTo(xplace2, redPosElims.yPos);
+        blueNegElims.moveTo(1300,blueNegElims.yPos);
+        bluePosElims.moveTo(1300,bluePosElims.yPos);
         drawTonomous();
       }
       else if (blueButton.pressing()){
@@ -246,6 +258,10 @@ int main() {
         redPos.moveTo(1000,redPos.yPos);
         blueNeg.moveTo(xplace,blueNeg.yPos);
         bluePos.moveTo(xplace,bluePos.yPos);
+        redNegElims.moveTo(1300,blueNegElims.yPos);
+        redPosElims.moveTo(1300,bluePosElims.yPos);
+        blueNegElims.moveTo(xplace2, redNegElims.yPos);
+        bluePosElims.moveTo(xplace2, redPosElims.yPos);
         drawTonomous();
       }
       else if (ColorChosen == 1){
@@ -255,6 +271,14 @@ int main() {
         }
         else if (redPos.pressing()){
           aselection = 3;
+          drawTonomous();
+        }
+        else if (redNegElims.pressing()) {
+          aselection = 6;
+          drawTonomous();
+        }
+        else if (redPosElims.pressing()) {
+          aselection = 8;
           drawTonomous();
         }
       }
@@ -267,6 +291,15 @@ int main() {
           aselection = 4;
           drawTonomous();
         }
+        else if (blueNegElims.pressing()) {
+          aselection = 7;
+          drawTonomous();
+        }
+        else if (bluePosElims.pressing()) {
+          aselection = 9;
+          drawTonomous();
+        }
+
       }
       if (skills.pressing()){
         aselection = 5;
