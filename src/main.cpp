@@ -12,18 +12,13 @@ THREE WIRE CONNECTIONS:
 #include "vex.h"
 #include <cmath>
 #include "robot-config.h"
+#include "autonomous.h"
 #include "autonSelect.h"
 
 using namespace vex;
 
 
 //define variables
-double driveError = 162.5; //set to 90% for 10% overshoot and 110% for 10% undershoot
-double turnError = 162.5; //same as this ^^^
-
-double moveActual;
-double turnActual;
-
 int liftMacroVar = 1;
 int doinkCount = 0;
 int intakeLiftCount = 0;
@@ -31,6 +26,27 @@ int colorSort = 1;
 int aselection = -1;
 
 
+//joystick curve math
+int turningCurve = 20;
+bool turningRed = true;
+
+int forwardCurve = 20;
+bool forwardRed = true;
+
+//graph of red and blue lines here
+//https://www.desmos.com/calculator/sdcgzah5ya
+int curveJoystick(bool red, int input, double t){
+  int val = 0;
+  if(red){
+    val = (std::exp(-t/10)+std::exp((std::abs(input)-100)/10)*(1-std::exp(-t/10))) * input;
+  }else{
+    //blue
+    val = std::exp(((std::abs(input)-100)*t)/1000) * input;
+  }
+  return val;
+}
+
+//define some macros
 void printTeamLogo() {
   if (aselection == 0) {
     Brain.Screen.setPenColor(red);
@@ -64,46 +80,6 @@ void printTeamLogo() {
   Brain.Screen.print("   'Y8888P'  8888888 'Y8888P'    888P     Y888   "); Brain.Screen.newLine();
 }
 
-//error control (begin jank fest)
-void driveForward (double moveDistance) {
-  moveActual=(((moveDistance) / 100) * driveError);
-  Drivetrain.driveFor(forward, (moveActual), inches);
-}
-void driveReverse (double moveDistance) {
-  moveActual=(((moveDistance) / 100) * driveError);
-  Drivetrain.driveFor(reverse, (moveActual), inches);
-}
-void turnRight (double turnDistance) {
-  turnActual=(((turnDistance) / 100) * turnError);
-  Drivetrain.turnFor(right, (turnActual), degrees);
-}
-void turnLeft (double turnDistance) {
-  turnActual=(((turnDistance) / 100) * turnError);
-  Drivetrain.turnFor(left, (turnActual), degrees);
-}
-
-
-//joystick curve math
-int turningCurve = 20;
-bool turningRed = true;
-
-int forwardCurve = 20;
-bool forwardRed = true;
-
-//graph of red and blue lines here
-//https://www.desmos.com/calculator/sdcgzah5ya
-int curveJoystick(bool red, int input, double t){
-  int val = 0;
-  if(red){
-    val = (std::exp(-t/10)+std::exp((std::abs(input)-100)/10)*(1-std::exp(-t/10))) * input;
-  }else{
-    //blue
-    val = std::exp(((std::abs(input)-100)*t)/1000) * input;
-  }
-  return val;
-}
-
-//define some macros
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
@@ -135,7 +111,7 @@ void doinkCode() {
   }
 }
 
-/*void doinkCode() {
+/*void specialDoinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
       Doinker.set(true);
@@ -194,145 +170,17 @@ void autonCode(void) {
   if (aselection == 0) {
     //do nothing
   } else if (aselection == 1) { //red negative auton
+    redNegativeAuton();
   } else if (aselection == 2) { //blue negative auton
+    blueNegativeAuton();
   } else if (aselection == 3) { //red positive auton
+    redPositiveAuton();
   } else if (aselection == 4) { //blue positive auton
+    bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
-    //skills auton
-    driveReverse(6);
-    wait(2, msec);
-    MogoClamp.set(true);
-    wait(2, msec);
-    turnLeft(190);
-    wait(2, msec);
-    IntakeMotor.spin(forward);
-    wait(2, msec);
-    driveForward(35.5);
-    wait(2, msec);
-    turnRight(93);
-    wait(2, msec);
-    driveForward(24);
-    wait(2, msec);
-    turnRight(93);
-    wait(2, msec);
-    driveForward(24);
-    wait(1, seconds);
-    driveForward(10);
-    wait(2, msec);
-    driveReverse(10);
-    wait(2, msec);
-    turnRight(136);
-    wait(2, seconds);
-    IntakeMotor.stop();
-    wait(2, msec);
-    MogoClamp.set(false);
-    driveReverse(16);
-    wait(2, msec);
-    driveForward(16);
-    wait(2, msec);
-    turnRight(145.75);
-    wait(2, msec);
-    driveReverse(68.5);
-    wait(2, msec);
-    MogoClamp.set(true);
-    wait(2, msec);
-    turnLeft(92);
-    wait(2, msec);
-    IntakeMotor.spin(forward);
-    wait(2, msec);
-    driveForward(24);
-    wait(2, msec);
-    turnLeft(92);
-    wait(2, msec);
-    driveForward(24);
-    wait(2, msec);
-    turnLeft(92);
-    wait(2, msec);
-    driveForward(24);
-    wait(1, seconds);
-    driveForward(12);
-    wait(2, msec);
-    driveReverse(12);
-    wait(2, msec);
-    turnLeft(145);
-    wait(2, msec);
-    MogoClamp.set(false);
-    wait(2, msec);
-    driveReverse(14);
-    wait(2, msec);
-    driveForward(14);
-    wait(2, msec);
-
-    //second half of skills auton
-    turnLeft(45);
-    wait(2, msec);
-    driveForward(72);
-    wait(2, msec);
-    IntakeMotor.spinFor(forward, 2, turns);
-    wait(2, msec);
-    driveForward(24);
-    wait(2, msec);
-    IntakeMotor.spinFor(forward, 2, turns);
-    wait(2, msec);
-    turnLeft(92);
-    wait(2, msec);
-    driveReverse(48);
-    wait(2, msec);
-    MogoClamp.set(true);
-    wait(2, msec);
-    IntakeMotor.spin(forward);
-    wait(2, msec);
-    driveForward(48);
-    wait(2, seconds);
-    IntakeMotor.stop();
-    wait(2, msec);
-    turnLeft(135);
-    wait(2, msec);
-    MogoClamp.set(false);
-    wait(2, msec);
-    driveReverse(16);
-    wait(2, msec);
-    driveForward(16);
-    wait(2, msec);
-    turnRight(135);
-    wait(2, msec);
-    driveReverse(48);
-    wait(2, msec);
-    turnLeft(92);
-    wait(2, msec);
-    Drivetrain.driveFor(reverse, 24, inches, 25, rpm, false);
-    wait(2, seconds);
-    driveForward(10);
-    wait(2, msec);
-    turnRight(92);
-    wait(2, msec);
-    driveForward(24);
-    wait(2, msec);
-    MogoClamp.set(true);
-    wait(2, msec);
-    turnLeft(180);
-    wait(2, msec);
-    IntakeMotor.spin(forward);
-    wait(2, msec);
-    driveForward(36);
-    wait(2, msec);
-    turnRight(135);
-    wait(2, msec);
-    driveReverse(16);
+    skillsAuton();
   }
-
-
-  
-
-  /*while(1){
-    if (Optical1.color() == red and Optical1.isNearObject()) {
-      IntakeMotor.spin(reverse);
-      wait(0.5, seconds);
-      IntakeMotor.stop();
-    } else {}
-  }*/
 }
-
 
 
 ///DRIVER CONTROL///
@@ -351,8 +199,7 @@ void driverControl(void) {
   //Optical1.setLight(ledState::on);
   
   
-  //loop
-  while(1){
+  while(1){ //use this section to continually look for conditions (check if controller button is pressed, check state of motor, etc)
     double turnVal = curveJoystick(false, Controller.Axis1.position(percent), turningCurve); //Get curvature according to settings [-100,100]
     double forwardVal = curveJoystick(false, Controller.Axis3.position(percent), forwardCurve); //Get curvature according to settings [-100,100]
 
@@ -362,18 +209,6 @@ void driverControl(void) {
     LeftDriveSmart.spin(forward, forwardVolts + turnVolts, voltageUnits::volt); //Apply Via Voltage
     RightDriveSmart.spin(forward, forwardVolts - turnVolts, voltageUnits::volt);
 
-    
-    /*if (colorSort == 1) {
-      Controller.Screen.print("Color sort is on");
-      if (Optical1.color() == red and Optical1.isNearObject()) {
-        IntakeMotor.spin(reverse);
-        wait(0.5, seconds);
-        IntakeMotor.stop();
-      } else {
-      }
-    } else {
-      Controller.Screen.print("Color sort is off");
-    }*/
 
     if (Controller.ButtonR1.pressing()) {
       IntakeMotor.spin(forward);
@@ -384,7 +219,9 @@ void driverControl(void) {
     }
 
 
-    /*if (Controller.ButtonY.pressing()) {
+    /*
+    //USE THIS IF LADYBROWN MACRO ISNT WORKING
+    if (Controller.ButtonY.pressing()) {
       LBMech.spin(reverse);
     } else if (Controller.ButtonRight.pressing()) {
       LBMech.spin(forward);
@@ -393,7 +230,9 @@ void driverControl(void) {
     }*/
     
 
-    /*Controller.Screen.clearScreen();
+    /*
+    //THIS SECTION OF CODE USES TOO MUCH RAM
+    Controller.Screen.clearScreen();
     Controller.Screen.setCursor(1, 1);
     Controller.Screen.print("Left:%.1f", leftMotorA.temperature(fahrenheit),",", leftMotorB.temperature(fahrenheit), ",", leftMotorC.temperature(fahrenheit) );
     Controller.Screen.newLine();
@@ -419,7 +258,6 @@ int main() {
   drawTonomous();
 
   //use coordinate presser for exact spacing
-
   while(unconfirmed){
     if(Brain.Screen.pressing()){
       if(redButton.pressing()){
