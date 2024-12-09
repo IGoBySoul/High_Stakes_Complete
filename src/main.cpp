@@ -258,8 +258,8 @@ int main() {
         redPos.moveTo(1000,redPos.yPos);
         blueNeg.moveTo(xplace,blueNeg.yPos);
         bluePos.moveTo(xplace,bluePos.yPos);
-        redNegElims.moveTo(1300,blueNegElims.yPos);
-        redPosElims.moveTo(1300,bluePosElims.yPos);
+        redNegElims.moveTo(1300,redNegElims.yPos);
+        redPosElims.moveTo(1300,redPosElims.yPos);
         blueNegElims.moveTo(xplace2, redNegElims.yPos);
         bluePosElims.moveTo(xplace2, redPosElims.yPos);
         drawTonomous();

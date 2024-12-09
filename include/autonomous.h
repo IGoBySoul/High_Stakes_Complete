@@ -30,40 +30,43 @@ void turnLeft (double turnDistance) {
 ///////AUTON PATHS///////
 
 void skillsAuton() {
-  Drivetrain.driveFor(reverse, 8, inches, false);
+  
+  //START RED PATH//
+
+  Drivetrain.driveFor(reverse, 8, inches, false); //scores preload on wall stake
   wait(1000, msec);
   IntakeMotor.spinFor(forward, 1, seconds);
   wait(2, msec);
   driveForward(16);
   wait(2, msec);
 
-  turnLeft(90);
+  turnLeft(90); //grabs mogo
   wait(2, msec);
   driveReverse(24);
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
 
-  turnLeft(90);
+  turnLeft(90); //intakes first ring
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
   driveForward(24);
   wait(2, msec);
 
-  turnRight(60);
+  turnRight(60); // second ring
   wait(2, msec);
   driveForward(36);
   wait(2, msec);
 
-  turnLeft(80);
+  turnLeft(80); //intakes third ring and preps it for wall stake
   wait(2, msec);
   driveForward(24);
   wait(500, msec);
   IntakeMotor.stop();
   wait(2, msec);
 
-  turnRight(30);
+  turnRight(30); //scores ring on wall stake
   wait(2, msec);
   driveReverse(24);
   wait(2, msec);
@@ -76,7 +79,7 @@ void skillsAuton() {
   LBMech.spinFor(forward, 1.5, seconds);
   wait(2, msec);
 
-  driveReverse(16);
+  driveReverse(16); //intakes and scores fourth and fifth rings
   wait(2, msec);
   turnRight(90);
   wait(2, msec);
@@ -85,17 +88,19 @@ void skillsAuton() {
   driveForward(48);
   wait(1000, msec);
 
-  driveForward(8);
+  driveForward(8); //intakes and scores 6th ring
   wait(2, msec);
   driveReverse(16);
   wait(2, msec);
   
-  turnLeft(45);
+  turnLeft(45); //intakes and scores 7th ring
   wait(2, msec);
   driveForward(10);
-  wait(2, msec);
+  wait(1000, msec);
 
-  turnLeft(180);
+  turnLeft(180); //puts mogo in corner
+  wait(2, msec);
+  IntakeMotor.stop();
   wait(2, msec);
   Drivetrain.drive(reverse);
   wait(1500, msec);
@@ -117,35 +122,189 @@ void skillsAuton() {
 
   //START GREEN PATH//
 
-  turnRight(45);
+  turnRight(45); //intakes first green ring
   wait(2, msec);
   driveForward(67);
   wait(2, msec);
   IntakeMotor.spinFor(forward, 0.5, seconds);
   wait(2, msec);
 
-  turnLeft(90);
+  turnLeft(90); //intakes second green ring
   wait(2, msec);
   driveForward(36);
   wait(2, msec);
   IntakeMotor.spinFor(forward, 0.75, seconds);
   wait(2, msec);
 
-  turnRight(135);
+  turnRight(135); //grabs green mogo
   wait(2, msec);
   driveReverse(24);
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
 
-  turnLeft(45);
+  turnLeft(45); //scores first and second green rings then intakes and scores third ring
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(1500, msec);
+  driveForward(32);
+  wait(750, msec);
+  
+  turnLeft(135); //scores 4th and 5th green rings
+  wait(2, msec);
+  driveForward(32);
+  wait(200, msec);
+  driveReverse(16);
+  wait(750, msec);
+
+  turnRight(45); //scores 6th ring
+  wait(2, msec);
+  driveForward(8);
+  wait(200, msec);
+  driveReverse(8);
+  wait(2, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  turnLeft(45); //puts green mogo into corner
+  wait(2, msec);
+  driveForward(6);
+  wait(2, msec);
+  turnLeft(135);
+  wait(2, msec);
+  Drivetrain.drive(reverse);
+  wait(1500, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  MogoClamp.set(false);
+  wait(2, msec);
+  driveForward(16);
+  wait(2, msec);
+
+  turnLeft(45); //alligns against wall
+  wait(2, msec);
+  Drivetrain.drive(reverse);
+  wait(750, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+
+  //START BLUE PATH//
+
+  IntakeMotor.spin(forward); //intakes first blue ring for wall stake
+  wait(2, msec);
+  LBMech.spin(reverse);
+  wait(750, msec);
+  LBMech.stop();
+  driveForward(36);
+  wait(2, msec);
+  turnLeft(30);
+  wait(2, msec);
+  driveForward(27);
+  wait(500, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  turnLeft(60); //scores first blue ring on wall stake
+  wait(2, msec);
+  Drivetrain.drive(forward);
+  wait(500, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  LBMech.spin(forward);
+  wait(750, msec);
+  LBMech.stop();
+  wait(2, msec);
+  driveReverse(16);
+  wait(2, msec);
+
+  turnRight(90); //intakes second blue ring
+  wait(2, msec);
+  driveForward(24);
+  IntakeMotor.spin(forward);
+  wait(500, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  turnRight(90); //intakes thirds blue ring
+  wait(2, msec);
+  driveForward(24);
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(750, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  turnRight(135); //grabs blue mogo
+  wait(2, msec);
+  driveReverse(30);
+  wait(2, msec);
+  MogoClamp.set(true);
+  wait(2, msec);
+  driveForward(3);
+  wait(2, msec);
+
+  turnRight(45); //scores rings 2 and 3 then scores rings 4 and 5
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
-  driveForward(32);
+  driveForward(48);
   wait(2, msec);
-  
-  turnLeft(135); //grab 4th green ring
+  driveForward(8);
+  wait(400, msec);
+  driveReverse(16);
+  wait(2, msec);
+
+  turnRight(45); //scores ring 6
+  wait(2, msec);
+  driveForward(10);
+  wait(500, msec);
+
+  turnRight(120); //puts blue mogo in corner
+  wait(2, msec);
+  Drivetrain.drive(reverse);
+  wait(1000, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  MogoClamp.set(false);
+  wait(2, msec);
+  driveForward(14);
+  wait(2, msec);
+
+  //BEGIN ORANGE PATH//
+
+  LBMech.spin(reverse); //intakes first orange ring for alliance stake
+  wait(500, msec);
+  LBMech.stop();
+  driveForward(80);
+  wait(2, msec);
+  IntakeMotor.spinFor(forward, 0.75, seconds);
+  wait(2, msec);
+  turnLeft(120);
+  wait(2, msec);
+
+  Drivetrain.drive(reverse); //scores on alliance stake
+  wait(3000, msec);
+  Drivetrain.stop();
+  wait(2, msec);
+  IntakeMotor.spin(forward);
+  wait(1000, msec);
+  IntakeMotor.stop();
+  wait(2, msec);
+
+  driveForward(12); //grab orange mogo
+  wait(2, msec);
+  turnRight(120);
+  wait(2, msec);
+  driveReverse(12);
+  wait(2, msec);
+  MogoClamp.set(true);
+  wait(2, msec);
+
+  driveReverse(36); //put orange mogo in corner
+  wait(2, msec);
+  turnLeft(45);
+  wait(2, msec);
+  driveReverse(16);
 }
 
 void redNegativeAuton() {

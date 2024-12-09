@@ -23,14 +23,10 @@ drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 319.19, 295, 40, mm, 1
 //other devices
 motor LBMech = motor(PORT19, ratio18_1, false);
 motor IntakeMotor = motor(PORT18, ratio18_1, false);
-optical Optical1 = optical(PORT17);
 
 //pneumatics
 digital_out MogoClamp = digital_out(Brain.ThreeWirePort.A);
 digital_out Doinker = digital_out(Brain.ThreeWirePort.B);
-digital_out IntakeLift = digital_out(Brain.ThreeWirePort.C);
-digital_out Pneu4 = digital_out(Brain.ThreeWirePort.D);
-digital_out Pneu5 = digital_out(Brain.ThreeWirePort.E);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
