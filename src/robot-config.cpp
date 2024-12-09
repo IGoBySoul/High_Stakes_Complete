@@ -21,7 +21,7 @@ motor_group RightDrive = motor_group(rightMotorA, rightMotorB, rightMotorC);
 drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 319.19, 295, 40, mm, 1);
 
 //other devices
-motor LBMech = motor(PORT19, ratio18_1, false);
+motor LBMech = motor(PORT20, ratio18_1, false);
 motor IntakeMotor = motor(PORT18, ratio18_1, false);
 
 //pneumatics

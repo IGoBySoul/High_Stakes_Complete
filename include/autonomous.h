@@ -343,40 +343,40 @@ void redNegativeAuton() {
   driveReverse(36);
 }
 
-void blueNegativeAuton() {
+void blueNegativeAuton() { //works
   driveReverse(24); //grabs mogo
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
   
-  turnLeft(135); // scores preload and first ring
+  turnLeft(145); // scores preload and first ring
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
-  driveForward(22);
+  driveForward(23);
   wait(500, msec);
-  driveReverse(12);
+  driveReverse(13);
   wait(2, msec);
 
-  turnRight(90); //scores second ring
+  turnRight(45); //scores second ring
   wait(2, msec);
   driveForward(14);
   wait(500, msec);
   driveReverse(6);
   wait(2, msec);
 
-  turnLeft(90); //scores third ring
+  turnLeft(80); //scores third ring
   wait(2, msec);
-  driveForward(8);
-  wait(500, msec);
-  driveReverse(8);
+  driveForward(17);
+  wait(1000, msec);
+  driveReverse(17);
   wait(2, msec);
 
   IntakeMotor.stop(); //drives to touch ladder
   wait(2, msec);
   turnRight(45);
   wait(2, msec);
-  driveReverse(36);
+  driveReverse(27);
 }
 
 void redPositiveAuton() {
@@ -432,26 +432,28 @@ void redPositiveAuton() {
 void bluePositiveAuton() {
   driveForward(36); //drives forward for mogo rush
   wait(2, msec);
-  turnRight(40);
+  turnRight(30);
   wait(2, msec);
   driveForward(6);
   wait(2, msec);
 
   Doinker.set(true); //grabs contested mogo with doinker then pulls it back and releases it
-  wait(2, msec);
-  driveReverse(14);
+  wait(200, msec);
+  Drivetrain.drive(reverse);
+  wait(750, msec);
+  Drivetrain.stop();
   wait(2, msec);
   Doinker.set(false);
   wait(2, msec);
 
-  turnRight(180); //turns around and grabs mogo
+  turnRight(215); //turns around and grabs mogo
   wait(2, msec);
-  driveReverse(8);
+  driveReverse(18);
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
 
-  turnLeft(90); //turns and drives forward to grab ring and score preload
+  turnLeft(100); //turns and drives forward to grab ring and score preload
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);

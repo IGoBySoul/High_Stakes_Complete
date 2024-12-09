@@ -86,10 +86,10 @@ void printTeamLogo() {
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBMech.spinTo(-57, degrees);
+      LBMech.spinTo(-56, degrees);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBMech.spinTo(-285, degrees);
+    LBMech.spinTo(-275, degrees);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
     LBMech.spinTo(0, degrees);
@@ -133,9 +133,9 @@ void autonCode(void) {
   printTeamLogo();
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
-  LBMech.setVelocity(75, percent);
-  Drivetrain.setDriveVelocity(25, percent);
-  Drivetrain.setTurnVelocity(20, percent);
+  LBMech.setVelocity(100, percent);
+  Drivetrain.setDriveVelocity(35, percent);
+  Drivetrain.setTurnVelocity(35, percent);
   MogoClamp.set(false);
 
 
