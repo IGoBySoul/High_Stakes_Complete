@@ -2,7 +2,7 @@
 PORTS:
   Drivetrain left: 12, 13, 14
   Drivetrain right: 4, 5, 8 
-  Lady brown: 19
+  Lady brown: 20
   Intake/conveyor: 18
 THREE WIRE CONNECTIONS:
   Mobile goal mechanism: ThreeWireA
@@ -210,16 +210,13 @@ void driverControl(void) {
     }*/
     
 
-    /*
-    //THIS SECTION OF CODE USES TOO MUCH RAM
+    
+    //THIS SECTION OF CODE USES TOO MUCH RAM //test it mightve fixed memory leak?
     Controller.Screen.clearScreen();
     Controller.Screen.setCursor(1, 1);
-    Controller.Screen.print("Left:%.1f", leftMotorA.temperature(fahrenheit),",", leftMotorB.temperature(fahrenheit), ",", leftMotorC.temperature(fahrenheit) );
+    Controller.Screen.print("Drive:%.1f", (leftMotorA.temperature(fahrenheit) + leftMotorB.temperature(fahrenheit) + leftMotorC.temperature(fahrenheit)/3), ", ", (rightMotorA.temperature(fahrenheit) + rightMotorB.temperature(fahrenheit) + rightMotorC.temperature(fahrenheit)/3) );
     Controller.Screen.newLine();
-    Controller.Screen.print("Right:%.1f", rightMotorA.temperature(fahrenheit),",", rightMotorB.temperature(fahrenheit), ",", rightMotorC.temperature(fahrenheit) );
-    Controller.Screen.newLine();
-    Controller.Screen.print("Intake:%.1f", IntakeMotor.temperature(fahrenheit));*/
-
+    Controller.Screen.print("Intake:%.1f", IntakeMotor.temperature(fahrenheit), ", LB:%.1f", LBMech.temperature(fahrenheit));
 
 
     this_thread::sleep_for(20);

@@ -307,40 +307,40 @@ void skillsAuton() {
   driveReverse(16);
 }
 
-void redNegativeAuton() {
+void redNegativeAuton() { //probably works?
   driveReverse(24); //grabs mogo
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
   
-  turnRight(135); // scores preload and first ring
+  turnRight(145); // scores preload and first ring
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
-  driveForward(22);
+  driveForward(23);
   wait(500, msec);
-  driveReverse(12);
+  driveReverse(13);
   wait(2, msec);
 
-  turnLeft(90); //scores second ring
+  turnLeft(45); //scores second ring
   wait(2, msec);
   driveForward(14);
   wait(500, msec);
   driveReverse(6);
   wait(2, msec);
 
-  turnRight(90); //scores third ring
+  turnRight(80); //scores third ring
   wait(2, msec);
-  driveForward(8);
-  wait(500, msec);
-  driveReverse(8);
+  driveForward(17);
+  wait(1000, msec);
+  driveReverse(17);
   wait(2, msec);
 
   IntakeMotor.stop(); //drives to touch ladder
   wait(2, msec);
   turnLeft(45);
   wait(2, msec);
-  driveReverse(36);
+  driveReverse(27);
 }
 
 void blueNegativeAuton() { //works
@@ -481,34 +481,34 @@ void bluePositiveAuton() {
   driveReverse(12); //drives to touch ladder
 }
 
-void redNegativeElimsAuto() {
+void redNegativeElimsAuto() { //probably works? mostly
   driveReverse(24); //grabs mogo
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
   
-  turnRight(135); // scores preload and first ring
+  turnRight(145); // scores preload and first ring
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
-  driveForward(22);
+  driveForward(23);
   wait(500, msec);
-  driveReverse(12);
+  driveReverse(13);
   wait(2, msec);
 
-  turnLeft(90); //scores second ring
+  turnLeft(45); //scores second ring
   wait(2, msec);
   driveForward(14);
   wait(500, msec);
   driveReverse(6);
   wait(2, msec);
 
-  turnRight(75); //scores third ring
+  turnRight(80); //scores third ring
   wait(2, msec);
-  driveForward(8);
-  wait(500, msec);
-  driveReverse(8);
-  wait(2, msec);
+  driveForward(17);
+  wait(1000, msec);
+  driveReverse(17);
+  wait(2, msec); //works? up to here
 
   turnLeft(135); //scores fourth ring
   wait(2, msec);
@@ -524,34 +524,34 @@ void redNegativeElimsAuto() {
   IntakeMotor.stop();
 }
 
-void blueNegativeElimsAuto() {
+void blueNegativeElimsAuto() { //works mostly
   driveReverse(24); //grabs mogo
   wait(2, msec);
   MogoClamp.set(true);
   wait(2, msec);
   
-  turnLeft(135); // scores preload and first ring
+  turnLeft(145); // scores preload and first ring
   wait(2, msec);
   IntakeMotor.spin(forward);
   wait(2, msec);
-  driveForward(22);
+  driveForward(23);
   wait(500, msec);
-  driveReverse(12);
+  driveReverse(13);
   wait(2, msec);
 
-  turnRight(90); //scores second ring
+  turnRight(45); //scores second ring
   wait(2, msec);
   driveForward(14);
   wait(500, msec);
   driveReverse(6);
   wait(2, msec);
 
-  turnLeft(75); //scores third ring
+  turnLeft(80); //scores third ring
   wait(2, msec);
-  driveForward(8);
-  wait(500, msec);
-  driveReverse(8);
-  wait(2, msec);
+  driveForward(17);
+  wait(1000, msec);
+  driveReverse(17);
+  wait(2, msec); //works up to here
 
   turnRight(135); //scores fourth ring
   wait(2, msec);
