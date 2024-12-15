@@ -19,7 +19,6 @@ using namespace vex;
 
 
 //define variables
-int liftMacroVar = 1;
 int doinkCount = 0;
 int intakeLiftCount = 0;
 int colorSort = 1;
@@ -83,18 +82,6 @@ void printTeamLogo() {
   Brain.Screen.print("   'Y8888P'  8888888 'Y8888P'    888P     Y888   "); Brain.Screen.newLine();
 }
 
-void liftMacro() {
-  if (liftMacroVar == 1) {
-      liftMacroVar = 2;
-      LBMech.spinTo(-56, degrees);
-  } else if (liftMacroVar == 2) {
-    liftMacroVar = 3;
-    LBMech.spinTo(-275, degrees);
-  } else if (liftMacroVar == 3) {
-    liftMacroVar = 1;
-    LBMech.spinTo(0, degrees);
-  }
-}
 
 void MogoCode() {
   if (MogoClamp.value() == false) {
@@ -134,8 +121,8 @@ void autonCode(void) {
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
   LBMech.setVelocity(100, percent);
-  Drivetrain.setDriveVelocity(35, percent);
-  Drivetrain.setTurnVelocity(35, percent);
+  Drivetrain.setDriveVelocity(25, percent);
+  Drivetrain.setTurnVelocity(25, percent);
   MogoClamp.set(false);
 
 
@@ -208,17 +195,6 @@ void driverControl(void) {
     } else {
       LBMech.stop();
     }*/
-    
-
-    
-    //THIS SECTION OF CODE USES TOO MUCH RAM //test it mightve fixed memory leak?
-    Controller.Screen.clearScreen();
-    Controller.Screen.setCursor(1, 1);
-    Controller.Screen.print("Drive:%.1f", (leftMotorA.temperature(fahrenheit) + leftMotorB.temperature(fahrenheit) + leftMotorC.temperature(fahrenheit)/3), ", ", (rightMotorA.temperature(fahrenheit) + rightMotorB.temperature(fahrenheit) + rightMotorC.temperature(fahrenheit)/3) );
-    Controller.Screen.newLine();
-    Controller.Screen.print("Intake:%.1f", IntakeMotor.temperature(fahrenheit), ", LB:%.1f", LBMech.temperature(fahrenheit));
-
-
     this_thread::sleep_for(20);
   }
 }
