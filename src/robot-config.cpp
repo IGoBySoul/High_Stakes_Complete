@@ -23,6 +23,7 @@ drivetrain Drivetrain = drivetrain(LeftDrive, RightDrive, 319.19, 295, 40, mm, 1
 //other devices
 motor LBMech = motor(PORT20, ratio18_1, false);
 motor IntakeMotor = motor(PORT18, ratio18_1, false);
+inertial inertialSensor(PORT15);
 
 //pneumatics
 digital_out MogoClamp = digital_out(Brain.ThreeWirePort.A);

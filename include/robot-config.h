@@ -21,6 +21,7 @@ extern digital_out MogoClamp;
 extern digital_out IntakeLift;
 extern digital_out Pneu4;
 extern digital_out Pneu5;
+extern inertial inertialSensor;
 
 
 
