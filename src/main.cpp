@@ -325,6 +325,11 @@ int main() {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  inertialSensor.calibrate();
+  while (inertialSensor.isCalibrating()) {
+    wait(100, msec);
+  }
+  
 
   //competition setup
   competition Competition;
