@@ -15,13 +15,14 @@ extern motor_group LeftDrive;
 extern motor_group RightDrive;
 extern motor IntakeMotor;
 extern motor LBMech;
-extern optical Optical1;
+extern optical opticalSensor;
 extern digital_out Doinker;
 extern digital_out MogoClamp;
 extern digital_out IntakeLift;
 extern digital_out Pneu4;
 extern digital_out Pneu5;
-
+extern inertial inertialSensor;
+extern rotation rotationSensor;
 
 
 /**

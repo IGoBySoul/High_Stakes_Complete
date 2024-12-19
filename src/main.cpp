@@ -4,6 +4,9 @@ PORTS:
   Drivetrain right: 4, 5, 8 
   Lady brown: 20
   Intake/conveyor: 18
+  Inertial sensor: 15
+  Optical sensor: 16
+  Rotational sensor: 17
 THREE WIRE CONNECTIONS:
   Mobile goal mechanism: ThreeWireA
   Doinker: ThreeWireB
@@ -21,7 +24,6 @@ using namespace vex;
 //define variables
 int doinkCount = 0;
 int intakeLiftCount = 0;
-int colorSort = 1;
 int aselection = -1;
 
 
@@ -129,23 +131,36 @@ void autonCode(void) {
   if (aselection == 0) {
     //do nothing
   } else if (aselection == 1) { //red negative auton
+    teamColor = 1;
     redNegativeAuton();
   } else if (aselection == 2) { //blue negative auton
+    teamColor = 2;
     blueNegativeAuton();
   } else if (aselection == 3) { //red positive auton
+    teamColor = 1;
     redPositiveAuton();
   } else if (aselection == 4) { //blue positive auton
+    teamColor = 2;
     bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
+    teamColor = 3;
     skillsAuton();
   } else if (aselection == 6) { //red neg elims auton
+    teamColor = 1;
     redNegativeElimsAuto();
   } else if (aselection == 7) { //blue neg elims auton
+    teamColor = 2;
     blueNegativeElimsAuto();
   } else if (aselection == 8) { //red pos elims auton
+    teamColor = 1;
     redPositiveElimsAuto();
   } else if (aselection == 9) { //blue pos elims auton
+    teamColor = 2;
     bluePositiveElimsAuto();
+  }
+
+  while(true){
+    colorSort();
   }
 }
 
@@ -157,6 +172,7 @@ void driverControl(void) {
   Controller.ButtonL2.pressed(liftMacro);
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
+  Controller.ButtonB.pressed(toggleSorting);
   //Controller.ButtonY.pressed(IntakeLiftCode);
   //Controller.ButtonDown.pressed(colorSortToggle);
   Drivetrain.setStopping(brake);
@@ -185,6 +201,7 @@ void driverControl(void) {
       IntakeMotor.stop();
     }
 
+    colorSort();
 
     /*
     //USE THIS IF LADYBROWN MACRO ISNT WORKING
@@ -325,6 +342,15 @@ int main() {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  inertialSensor.resetRotation();
+  inertialSensor.calibrate();
+  while (inertialSensor.isCalibrating()) {
+    wait(50, msec);
+  }
+  rotationSensor.resetPosition();
+  inertialSensor.resetRotation();
+  rotationSensor.setReversed(true);
+
 
   //competition setup
   competition Competition;
