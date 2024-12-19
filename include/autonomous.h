@@ -4,7 +4,8 @@
 
 //create variables and stuff
 int liftMacroVar = 1;
-int colorSortToggle = 1;
+bool colorSortToggle = true;
+int teamColor = 1; //1 == red, 2 == blue
 
 void liftMacro() {
   if (liftMacroVar == 1) {
@@ -18,9 +19,19 @@ void liftMacro() {
     LBMech.spinTo(0, degrees);
   }
 }
-
+ 
 void colorSort(){
-  if (colorSortToggle == 1);
+  if (colorSortToggle == true) {
+    if (teamColor == 1 /*red*/) {
+      if (opticalSensor.color() == blue){
+        LBMech.spinFor(reverse, 15, degrees);
+      }
+    } else if (teamColor == 2 /*blue*/) {
+      if (opticalSensor.color() == red){
+        LBMech.spinFor(reverse, 15, degrees);
+      }
+    }
+  }
 }
 
 ///PID///

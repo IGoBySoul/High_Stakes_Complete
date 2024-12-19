@@ -21,7 +21,6 @@ using namespace vex;
 //define variables
 int doinkCount = 0;
 int intakeLiftCount = 0;
-int colorSort = 1;
 int aselection = -1;
 
 
