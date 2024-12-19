@@ -4,6 +4,7 @@
 
 //create variables and stuff
 int liftMacroVar = 1;
+int colorSortToggle = 1;
 
 void liftMacro() {
   if (liftMacroVar == 1) {
@@ -16,6 +17,10 @@ void liftMacro() {
     liftMacroVar = 1;
     LBMech.spinTo(0, degrees);
   }
+}
+
+void colorSort(){
+  if (colorSortToggle == 1);
 }
 
 ///PID///
