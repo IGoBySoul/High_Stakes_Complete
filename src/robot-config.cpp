@@ -25,6 +25,7 @@ motor LBMech = motor(PORT20, ratio18_1, false);
 motor IntakeMotor = motor(PORT18, ratio18_1, false);
 inertial inertialSensor(PORT15);
 optical opticalSensor(PORT16);
+rotation rotationSensor(PORT17);
 
 //pneumatics
 digital_out MogoClamp = digital_out(Brain.ThreeWirePort.A);

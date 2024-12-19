@@ -4,33 +4,56 @@
 
 //create variables and stuff
 int liftMacroVar = 1;
-bool colorSortToggle = true;
+bool colorSortBool = true;
 int teamColor = 1; //1 == red, 2 == blue
+
+void LBRotation(double degrees) {
+  if (rotationSensor.position(deg) < degrees) {
+    LBMech.spin(reverse);
+  } else {
+    LBMech.stop();
+  }
+}
 
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBMech.spinTo(-45, degrees);
+      LBRotation(45);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBMech.spinTo(-275, degrees);
+    LBRotation(200);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
-    LBMech.spinTo(0, degrees);
+    LBRotation(0);
   }
 }
- 
+
+void toggleSorting() {
+  if (colorSortBool == true) {
+    colorSortBool = false;
+  } else if (colorSortBool == false) {
+    colorSortBool = true;
+  }
+}
+
 void colorSort(){
-  if (colorSortToggle == true) {
+  if (colorSortBool == true) {
+    Controller.Screen.clearScreen();
+    Controller.Screen.setCursor(1, 1);
+    Controller.Screen.print("Sorting Enabled!");
     if (teamColor == 1 /*red*/) {
-      if (opticalSensor.color() == blue){
-        LBMech.spinFor(reverse, 15, degrees);
+      if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
+        LBRotation(15);
       }
     } else if (teamColor == 2 /*blue*/) {
-      if (opticalSensor.color() == red){
-        LBMech.spinFor(reverse, 15, degrees);
+      if (opticalSensor.color() == red && opticalSensor.isNearObject()){
+        LBRotation(15);
       }
     }
+  } else if (colorSortBool == false) {
+    Controller.Screen.clearScreen();
+    Controller.Screen.setCursor(1, 1);
+    Controller.Screen.print("Sorting Disabled!");
   }
 }
 
