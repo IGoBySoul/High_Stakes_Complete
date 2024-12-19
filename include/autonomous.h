@@ -26,97 +26,45 @@ const double kI = 0.01; // Integral gain
 const double kD = 0.1; // Derivative gain
 const double PI = 3.141592653589793; // Pi constant
 
-// Global variables for PID
-double error = 0;
-double previousError = 0;
-double integral = 0;
-double derivative = 0;
-
-// Target position (x, y) in mm
-double targetX = 0;
-double targetY = 0;
-
-// Position tracking
-double currentX = 0;
-double currentY = 0;
-double currentHeading = 0;
-
-double lastHeading = 0;
-
 double degreesToRadians(double degrees) {
     return degrees * PI / 180.0;
 }
 
-void updatePosition() {
-    // Get the current heading and calculate change in heading
-    currentHeading = inertialSensor.heading();
-    double deltaHeading = currentHeading - lastHeading;
-
-    // Normalize deltaHeading to the range -180 to 180 degrees
-    if (deltaHeading > 180) {
-        deltaHeading -= 360;
-    } else if (deltaHeading < -180) {
-        deltaHeading += 360;
-    }
-
-    // Calculate distance moved based on left and right motor velocities
-    double distanceMoved = (LeftDrive.velocity(percent) + RightDrive.velocity(percent)) / 2.0 * 0.02 * 10; // Average velocity * time
-
-    // Update X and Y positions
-    currentX += distanceMoved * cos(degreesToRadians(currentHeading));
-    currentY += distanceMoved * sin(degreesToRadians(currentHeading));
-
-    // Update lastHeading
-    lastHeading = currentHeading;
-}
-
-void PIDMoveTo(double targetXPos, double targetYPos, double timeout) {
-    // Set the target position
-    targetX = targetXPos;
-    targetY = targetYPos;
-
+void PIDDrive(double targetDistance, double timeout) {
     // Timer for timeout
     timer timer;
     timer.reset();
 
+    double currentDistance = 0;
+    double previousError = 0;
+    double integral = 0;
+
     while (true) {
-        // Update the robot's position
-        updatePosition();
+        // Calculate error
+        double error = targetDistance - currentDistance;
 
-        // Calculate the distance and angle to the target
-        double deltaX = targetX - currentX;
-        double deltaY = targetY - currentY;
-        double distanceToTarget = sqrt(deltaX * deltaX + deltaY * deltaY);
-        double angleToTarget = atan2(deltaY, deltaX) * 180.0 / PI;
+        // Integral and derivative
+        integral += error;
+        double derivative = error - previousError;
 
-        // Calculate heading error
-        double headingError = angleToTarget - currentHeading;
+        // PID calculation
+        double power = (kP * error) + (kI * integral) + (kD * derivative);
+        power = std::max(-100.0, std::min(power, 100.0));
 
-        // Normalize heading error to -180 to 180 degrees
-        if (headingError > 180) {
-            headingError -= 360;
-        } else if (headingError < -180) {
-            headingError += 360;
-        }
+        // Apply power to motors
+        LeftDrive.spin(forward, power, percent);
+        RightDrive.spin(forward, power, percent);
 
-        // PID for heading
-        double turnPower = (kP * headingError) + (kI * integral) + (kD * derivative);
-        turnPower = std::max(-50.0, std::min(turnPower, 50.0));
+        // Simulate updating the distance (replace with actual sensor feedback in practice)
+        currentDistance += (LeftDrive.velocity(percent) + RightDrive.velocity(percent)) / 2.0 * 0.02 * 10; // Average velocity * time
 
-        // PID for forward movement
-        double forwardPower = (kP * distanceToTarget);
-        forwardPower = std::max(-100.0, std::min(forwardPower, 100.0));
-
-        // Apply motor power
-        LeftDrive.spin(forward, forwardPower - turnPower, percent);
-        RightDrive.spin(forward, forwardPower + turnPower, percent);
-
-        // Exit condition: if within tolerance or timeout exceeded
-        if (distanceToTarget < 10 || timer.time() > timeout * 1000) {
+        // Exit conditions
+        if (fabs(error) < 10 || timer.time() > timeout * 1000) {
             break;
         }
 
-        // Small delay for control loop
+        previousError = error;
+
         wait(20, msec);
     }
 
@@ -125,6 +73,55 @@ void PIDMoveTo(double targetXPos, double targetYPos, double timeout) {
     RightDrive.stop();
 }
 
+void PIDTurn(double targetAngle, double timeout) {
+    // Timer for timeout
+    timer timer;
+    timer.reset();
+
+    double currentAngle = inertialSensor.heading();
+    double previousError = 0;
+    double integral = 0;
+
+    while (true) {
+        // Calculate error
+        double error = targetAngle - currentAngle;
+
+        // Normalize error to -180 to 180 degrees
+        if (error > 180) {
+            error -= 360;
+        } else if (error < -180) {
+            error += 360;
+        }
+
+        // Integral and derivative
+        integral += error;
+        double derivative = error - previousError;
+
+        // PID calculation
+        double power = (kP * error) + (kI * integral) + (kD * derivative);
+        power = std::max(-50.0, std::min(power, 50.0));
+
+        // Apply power to motors
+        LeftDrive.spin(forward, -power, percent);
+        RightDrive.spin(forward, power, percent);
+
+        // Update current angle
+        currentAngle = inertialSensor.heading();
+
+        // Exit conditions
+        if (fabs(error) < 1 || timer.time() > timeout * 1000) {
+            break;
+        }
+
+        previousError = error;
+
+        wait(20, msec);
+    }
+
+    // Stop motors
+    LeftDrive.stop();
+    RightDrive.stop();
+}
 
 ///////AUTON PATHS///////
 
