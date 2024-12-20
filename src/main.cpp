@@ -111,22 +111,6 @@ void liftHalf() {
   LBSpin(90);
 }
 
-/*void specialDoinkCode() {
-  if (Doinker.value() == false) {
-    if (doinkCount < 4) {
-      Doinker.set(true);
-      doinkCount = doinkCount + 1;
-    } else {
-
-    }
-  } else if (Doinker.value() == true) {
-    Doinker.set(false);
-  } else {
-
-  }
-}*/
-
-
 //AUTON CODE//
 void autonCode(void) {
   printTeamLogo();
@@ -185,13 +169,10 @@ void driverControl(void) {
   Controller.ButtonB.pressed(toggleSorting);
   Controller.ButtonDown.pressed(liftHalf);
   Controller.ButtonRight.pressed(liftRedo);
-  //Controller.ButtonY.pressed(IntakeLiftCode);
-  //Controller.ButtonDown.pressed(colorSortToggle);
   Drivetrain.setStopping(brake);
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
   LBMech.setVelocity(75, percent);
-  //Optical1.setLight(ledState::on);
   
   
   while(1){ //use this section to continually look for conditions (check if controller button is pressed, check state of motor, etc)
@@ -214,16 +195,7 @@ void driverControl(void) {
     }
 
     colorSort();
-
-    /*
-    //USE THIS IF LADYBROWN MACRO ISNT WORKING
-    if (Controller.ButtonY.pressing()) {
-      LBMech.spin(reverse);
-    } else if (Controller.ButtonRight.pressing()) {
-      LBMech.spin(forward);
-    } else {
-      LBMech.stop();
-    }*/
+    
     this_thread::sleep_for(20);
   }
 }
@@ -362,6 +334,7 @@ int main() {
   rotationSensor.resetPosition();
   inertialSensor.resetRotation();
   rotationSensor.setReversed(true);
+  opticalSensor.setLight(ledState::on);
 
 
   //competition setup
