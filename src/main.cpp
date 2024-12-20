@@ -101,6 +101,16 @@ void doinkCode() {
   }
 }
 
+void liftRedo() {
+  liftMacroVar = 2;
+  LBSpin(45);
+}
+
+void liftHalf() {
+  liftMacroVar = 2;
+  LBSpin(90);
+}
+
 /*void specialDoinkCode() {
   if (Doinker.value() == false) {
     if (doinkCount < 4) {
@@ -173,6 +183,8 @@ void driverControl(void) {
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
   Controller.ButtonB.pressed(toggleSorting);
+  Controller.ButtonDown.pressed(liftHalf);
+  Controller.ButtonRight.pressed(liftRedo);
   //Controller.ButtonY.pressed(IntakeLiftCode);
   //Controller.ButtonDown.pressed(colorSortToggle);
   Drivetrain.setStopping(brake);
