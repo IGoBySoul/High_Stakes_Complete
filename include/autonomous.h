@@ -22,18 +22,12 @@ void LBSpinTo(double degrees) {
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
+      LBSpinTo(16);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
+    LBSpinTo(135);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
-  }
-}
-void liftMacroConstant() {
-  if (liftMacroVar == 2) {
-      LBSpinTo(15);
-  } else if (liftMacroVar == 3) {
-    LBSpinTo(90);
-  } else if (liftMacroVar == 1) {
     LBSpinTo(2);
   }
 }
