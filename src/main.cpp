@@ -103,12 +103,12 @@ void doinkCode() {
 
 void liftRedo() {
   liftMacroVar = 2;
-  LBSpinDown(45);
+  LBSpinTo(45);
 }
 
 void liftHalf() {
   liftMacroVar = 2;
-  LBSpinUp(90);
+  LBSpinTo(90);
 }
 
 //AUTON CODE//
