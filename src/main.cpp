@@ -4,8 +4,8 @@ PORTS:
   Drivetrain right: 4, 5, 8 
   Lady brown: 20
   Intake/conveyor: 18
-  Inertial sensor: 15
-  Optical sensor: 16
+  Inertial sensor: 9
+  Optical sensor: 10
   Rotational sensor: 17
 THREE WIRE CONNECTIONS:
   Mobile goal mechanism: ThreeWireA
@@ -103,12 +103,12 @@ void doinkCode() {
 
 void liftRedo() {
   liftMacroVar = 2;
-  LBSpin(45);
+  LBSpinDown(45);
 }
 
 void liftHalf() {
   liftMacroVar = 2;
-  LBSpin(90);
+  LBSpinUp(90);
 }
 
 //AUTON CODE//
@@ -195,6 +195,7 @@ void driverControl(void) {
     }
 
     colorSort();
+    liftMacroConstant();
     
     this_thread::sleep_for(20);
   }

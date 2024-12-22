@@ -7,9 +7,11 @@ int liftMacroVar = 1;
 bool colorSortBool = true;
 int teamColor = 1; //1 == red, 2 == blue
 
-void LBSpin(double degrees) {
+void LBSpinTo(double degrees) {
   if (rotationSensor.position(deg) < degrees) {
     LBMech.spin(reverse);
+  } else if (rotationSensor.position(deg) > degrees) {
+    LBMech.spin(forward);
   } else {
     LBMech.stop();
   }
@@ -18,13 +20,19 @@ void LBSpin(double degrees) {
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpin(45);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBSpin(200);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
-    LBSpin(0);
+  }
+}
+void liftMacroConstant() {
+  if (liftMacroVar == 2) {
+      LBSpinUp(15);
+  } else if (liftMacroVar == 3) {
+    LBSpinUp(90);
+  } else if (liftMacroVar == 1) {
+    LBSpinDown(2);
   }
 }
 
@@ -43,11 +51,15 @@ void colorSort(){
     Controller.Screen.print("Sorting Enabled!");
     if (teamColor == 1 /*red*/) {
       if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
-        LBSpin(15);
+        LBSpinUp(15);
+        wait(200, msec);
+        LBSpinDown(15);
       }
     } else if (teamColor == 2 /*blue*/) {
       if (opticalSensor.color() == red && opticalSensor.isNearObject()){
-        LBSpin(15);
+        LBSpinUp(15);
+        wait(200, msec);
+        LBSpinDown(15);
       }
     }
   } else if (colorSortBool == false) {
@@ -165,9 +177,10 @@ void PIDTurn(double targetAngle, double timeout) {
 ///////AUTON PATHS///////
 
 void skillsAuton() {
-  LBSpin(35);
   wait(2, msec);
   PIDDrive(10, 2);
+  PIDTurn(90, 2);
+  LBSpinUp(35);
 }
 
 void redNegativeAuton() {
