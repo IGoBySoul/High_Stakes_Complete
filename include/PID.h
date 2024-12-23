@@ -9,7 +9,7 @@ const double wheelCircumference = wheelDiameter * M_PI;
 
 // PID constants for driving
 double kP_drive = 5;
-double kI_drive = 0.034;
+double kI_drive = 0.034; //0.034
 double kD_drive = 0.2;
 
 // PID constants for turning
@@ -18,11 +18,11 @@ double kI_turn = 0.0;
 double kD_turn = 0.1;
 
 // Tolerance for stopping the loop
-const double tolerance = 1; // Adjust as needed
+const double tolerance = 0.4; // Adjust as needed
 
 // Function to drive straight
 void PIDDrive(double targetDistance, double maxSpeed) {
-  double error = 0;
+  double error = targetDistance;
   double prevError = 0;
   double integral = 0;
   double derivative = 0;
