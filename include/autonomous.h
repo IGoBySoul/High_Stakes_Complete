@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void skillsAuton() {
-  PIDDrive(48, 50);
+  PIDDrive(24, 50);
 }
 
 void redNegativeAuton() {
