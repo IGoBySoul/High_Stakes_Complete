@@ -103,12 +103,12 @@ void doinkCode() {
 
 void liftRedo() {
   liftMacroVar = 2;
-  LBSpinTo(45);
+  LBSpinDown(45);
 }
 
 void liftHalf() {
   liftMacroVar = 2;
-  LBSpinTo(90);
+  LBSpinUp(90);
 }
 
 //AUTON CODE//
@@ -195,7 +195,6 @@ void driverControl(void) {
     }
 
     colorSort();
-    liftMacroConstant();
     
     this_thread::sleep_for(20);
   }
@@ -327,16 +326,15 @@ int main() {
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+  rotationSensor.resetPosition();
   inertialSensor.resetRotation();
   inertialSensor.calibrate();
   while (inertialSensor.isCalibrating()) {
     wait(50, msec);
   }
-  rotationSensor.resetPosition();
   inertialSensor.resetRotation();
-  rotationSensor.setReversed(true);
   opticalSensor.setLight(ledState::on);
-
+  rotationSensor.setPosition(5, degrees);
 
   //competition setup
   competition Competition;

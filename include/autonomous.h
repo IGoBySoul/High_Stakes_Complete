@@ -7,28 +7,28 @@ int liftMacroVar = 1;
 bool colorSortBool = true;
 int teamColor = 1; //1 == red, 2 == blue
 
-void LBSpinTo(double degrees) {
-  if (degrees < rotationSensor.position(deg)) {
-    LBMech.spin(reverse, 100, percent);
-    waitUntil(rotationSensor.angle() == degrees);
-    LBMech.stop(); 
-  } else if (degrees > rotationSensor.position(deg)) {
-    LBMech.spin(forward, 100, percent);
-    waitUntil(rotationSensor.angle() == degrees);
-    LBMech.stop(); 
-  } else {}
+void LBSpinUp(double targetAngle) {
+  LBMech.spin(reverse, 100, percent);
+  waitUntil(rotationSensor.position(degrees) >= targetAngle);
+  LBMech.stop();
+}
+
+void LBSpinDown(double targetAngle) {
+  LBMech.spin(forward, 100, percent);
+  waitUntil(rotationSensor.position(degrees) <= targetAngle);
+  LBMech.stop(); 
 }
 
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpinTo(16);
+      LBSpinUp(18);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBSpinTo(135);
+    LBSpinUp(135);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
-    LBSpinTo(2);
+    LBSpinDown(5);
   }
 }
 
@@ -47,15 +47,15 @@ void colorSort(){
     Controller.Screen.print("Sorting Enabled!");
     if (teamColor == 1 /*red*/) {
       if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
-        LBSpinTo(15);
+        LBSpinUp(15);
         wait(200, msec);
-        LBSpinTo(15);
+        LBSpinDown(15);
       }
     } else if (teamColor == 2 /*blue*/) {
       if (opticalSensor.color() == red && opticalSensor.isNearObject()){
-        LBSpinTo(15);
+        LBSpinUp(15);
         wait(200, msec);
-        LBSpinTo(15);
+        LBSpinDown(15);
       }
     }
   } else if (colorSortBool == false) {
@@ -72,10 +72,7 @@ const double kP = 0.5; // Proportional gain
 const double kI = 0.01; // Integral gain
 const double kD = 0.1; // Derivative gain
 const double PI = 3.141592653589793; // Pi constant
-
-double degreesToRadians(double degrees) {
-    return degrees * PI / 180.0;
-}
+const double SPEED_FACTOR = 0.50;
 
 void PIDDrive(double targetDistance, double timeout) {
     // Timer for timeout
@@ -85,6 +82,7 @@ void PIDDrive(double targetDistance, double timeout) {
     double currentDistance = 0;
     double previousError = 0;
     double integral = 0;
+    double startAngle = inertialSensor.rotation(); // Initial angle
 
     while (true) {
         // Calculate error
@@ -95,18 +93,21 @@ void PIDDrive(double targetDistance, double timeout) {
         double derivative = error - previousError;
 
         // PID calculation
-        double power = (kP * error) + (kI * integral) + (kD * derivative);
-        power = std::max(-100.0, std::min(power, 100.0));
+        double voltage = (kP * error) + (kI * integral) + (kD * derivative);
+        voltage = std::max(-12.0, std::min(voltage, 12.0)); // Clamp voltage to -12V to 12V
+        voltage *= SPEED_FACTOR; // Scale voltage by speed factor
 
-        // Apply power to motors
-        LeftDrive.spin(forward, power, percent);
-        RightDrive.spin(forward, power, percent);
+        // Apply voltage to motors
+        LeftDrive.spin(forward, voltage, voltageUnits::volt);
+        RightDrive.spin(forward, voltage, voltageUnits::volt);
 
-        // Simulate updating the distance (replace with actual sensor feedback in practice)
-        currentDistance += (LeftDrive.velocity(percent) + RightDrive.velocity(percent)) / 2.0 * 0.02 * 10; // Average velocity * time
+        // Update current distance based on inertial sensor
+        double currentAngle = inertialSensor.rotation();
+        double deltaAngle = currentAngle - startAngle;
+        currentDistance = deltaAngle / 360.0 * targetDistance; // Calculate distance using inertial sensor rotation
 
         // Exit conditions
-        if (fabs(error) < 10 || timer.time() > timeout * 1000) {
+        if (fabs(error) < 0.5 || timer.time() > timeout * 1000) {
             break;
         }
 
@@ -145,12 +146,13 @@ void PIDTurn(double targetAngle, double timeout) {
         double derivative = error - previousError;
 
         // PID calculation
-        double power = (kP * error) + (kI * integral) + (kD * derivative);
-        power = std::max(-50.0, std::min(power, 50.0));
+        double voltage = (kP * error) + (kI * integral) + (kD * derivative);
+        voltage = std::max(-6.0, std::min(voltage, 6.0)); // Clamp voltage to -6V to 6V
+        voltage *= SPEED_FACTOR; // Scale voltage by speed factor
 
-        // Apply power to motors
-        LeftDrive.spin(forward, -power, percent);
-        RightDrive.spin(forward, power, percent);
+        // Apply voltage to motors
+        LeftDrive.spin(forward, -voltage, voltageUnits::volt);
+        RightDrive.spin(forward, voltage, voltageUnits::volt);
 
         // Update current angle
         currentAngle = inertialSensor.heading();
@@ -170,13 +172,11 @@ void PIDTurn(double targetAngle, double timeout) {
     RightDrive.stop();
 }
 
+
 ///////AUTON PATHS///////
 
 void skillsAuton() {
-  wait(2, msec);
   PIDDrive(10, 2);
-  PIDTurn(90, 2);
-  LBSpinTo(35);
 }
 
 void redNegativeAuton() {
