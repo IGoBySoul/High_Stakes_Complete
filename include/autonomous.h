@@ -69,7 +69,7 @@ void colorSort(){
 ///////AUTON PATHS///////
 
 void skillsAuton() {
-  PIDDrive(10);
+  PIDDrive(10, 50);
 }
 
 void redNegativeAuton() {
