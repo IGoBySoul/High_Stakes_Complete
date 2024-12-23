@@ -9,7 +9,7 @@ const double wheelCircumference = wheelDiameter * M_PI;
 
 // PID constants for driving
 double kP_drive = 5;
-double kI_drive = 0.034; //0.034
+double kI_drive = 0.034;
 double kD_drive = 0.2;
 
 // PID constants for turning
@@ -18,7 +18,7 @@ double kI_turn = 0.0;
 double kD_turn = 0.1;
 
 // Tolerance for stopping the loop
-const double tolerance = 0.4; // Adjust as needed
+const double tolerance = 0.5; // Adjust as needed
 
 // Function to drive straight
 void PIDDrive(double targetDistance, double maxSpeed) {
@@ -27,6 +27,8 @@ void PIDDrive(double targetDistance, double maxSpeed) {
   double integral = 0;
   double derivative = 0;
   double currentDistance = 0;
+  double currentSpeed = 0;
+  const double accelerationRate = 0.5; // Adjust as needed
 
   // Reset sensors
   inertialSensor.resetRotation();
@@ -51,12 +53,22 @@ void PIDDrive(double targetDistance, double maxSpeed) {
 
     double motorSpeed = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
 
-    // Correction to avoid drifting
-    double correction = (leftDistance - rightDistance) * 0.1; // Adjust the correction factor as needed
+    // Ramp-up mechanism
+    if (currentSpeed < maxSpeed) {
+      currentSpeed += accelerationRate;
+      if (currentSpeed > maxSpeed) {
+        currentSpeed = maxSpeed;
+      }
+    } else {
+      currentSpeed = maxSpeed;
+    }
 
     // Limit motor speed
-    if (motorSpeed > maxSpeed) motorSpeed = maxSpeed;
-    if (motorSpeed < -maxSpeed) motorSpeed = -maxSpeed;
+    if (motorSpeed > currentSpeed) motorSpeed = currentSpeed;
+    if (motorSpeed < -currentSpeed) motorSpeed = -currentSpeed;
+
+    // Correction to avoid drifting
+    double correction = (leftDistance - rightDistance) * 0.1; // Adjust the correction factor as needed
 
     // Set motor speeds with correction
     LeftDrive.spin(forward, motorSpeed - correction, percent);
