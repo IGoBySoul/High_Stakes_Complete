@@ -67,116 +67,86 @@ void colorSort(){
 
 ///PID///
 
-// Define constants for PID control
-const double kP = 0.5; // Proportional gain
-const double kI = 0.01; // Integral gain
-const double kD = 0.1; // Derivative gain
-const double PI = 3.141592653589793; // Pi constant
-const double SPEED_FACTOR = 0.50;
+// PID Controller Variables
+double kP_drive = 0.5;  // Proportional gain for forward movement
+double kI_drive = 0.0;  // Integral gain for forward movement
+double kD_drive = 0.1;  // Derivative gain for forward movement
 
-void PIDDrive(double targetDistance, double timeout) {
-    // Timer for timeout
-    timer timer;
-    timer.reset();
+double kP_turn = 0.3;   // Proportional gain for turning
+double kI_turn = 0.0;   // Integral gain for turning
+double kD_turn = 0.05;  // Derivative gain for turning
 
-    double currentDistance = 0;
-    double previousError = 0;
-    double integral = 0;
-    double startAngle = inertialSensor.rotation(); // Initial angle
+double targetDistance = 1000;  // Target distance in encoder counts (change as needed)
+double targetAngle = 90;       // Target angle in degrees (change as needed)
+double error, prevError = 0, integral = 0, derivative;
 
-    while (true) {
-        // Calculate error
-        double error = targetDistance - currentDistance;
-
-        // Integral and derivative
-        integral += error;
-        double derivative = error - previousError;
-
-        // PID calculation
-        double voltage = (kP * error) + (kI * integral) + (kD * derivative);
-        voltage = std::max(-12.0, std::min(voltage, 12.0)); // Clamp voltage to -12V to 12V
-        voltage *= SPEED_FACTOR; // Scale voltage by speed factor
-
-        // Apply voltage to motors
-        LeftDrive.spin(forward, voltage, voltageUnits::volt);
-        RightDrive.spin(forward, voltage, voltageUnits::volt);
-
-        // Update current distance based on inertial sensor
-        double currentAngle = inertialSensor.rotation();
-        double deltaAngle = currentAngle - startAngle;
-        currentDistance = deltaAngle / 360.0 * targetDistance; // Calculate distance using inertial sensor rotation
-
-        // Exit conditions
-        if (fabs(error) < 0.5 || timer.time() > timeout * 1000) {
-            break;
-        }
-
-        previousError = error;
-
-        wait(20, msec);
-    }
-
-    // Stop motors
-    LeftDrive.stop();
-    RightDrive.stop();
+// Forward Movement PID
+double pidDriveControl(double setpoint, double current) {
+  error = setpoint - current;
+  integral += error;
+  derivative = error - prevError;
+  
+  double output = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
+  prevError = error;
+  return output;
 }
 
-void PIDTurn(double targetAngle, double timeout) {
-    // Timer for timeout
-    timer timer;
-    timer.reset();
+// Turning PID
+double pidTurnControl(double setpoint, double current) {
+  error = setpoint - current;
+  integral += error;
+  derivative = error - prevError;
+  
+  double output = (kP_turn * error) + (kI_turn * integral) + (kD_turn * derivative);
+  prevError = error;
+  return output;
+}
 
-    double currentAngle = inertialSensor.heading();
-    double previousError = 0;
-    double integral = 0;
-
-    while (true) {
-        // Calculate error
-        double error = targetAngle - currentAngle;
-
-        // Normalize error to -180 to 180 degrees
-        if (error > 180) {
-            error -= 360;
-        } else if (error < -180) {
-            error += 360;
-        }
-
-        // Integral and derivative
-        integral += error;
-        double derivative = error - previousError;
-
-        // PID calculation
-        double voltage = (kP * error) + (kI * integral) + (kD * derivative);
-        voltage = std::max(-6.0, std::min(voltage, 6.0)); // Clamp voltage to -6V to 6V
-        voltage *= SPEED_FACTOR; // Scale voltage by speed factor
-
-        // Apply voltage to motors
-        LeftDrive.spin(forward, -voltage, voltageUnits::volt);
-        RightDrive.spin(forward, voltage, voltageUnits::volt);
-
-        // Update current angle
-        currentAngle = inertialSensor.heading();
-
-        // Exit conditions
-        if (fabs(error) < 1 || timer.time() > timeout * 1000) {
-            break;
-        }
-
-        previousError = error;
-
-        wait(20, msec);
+// Drive Forward to a distance
+void PIDDrive(double distance) {
+  while (true) {
+    double currentPosition = inertialSensor.rotation();  // Get current rotation
+    double output = pidDriveControl(distance, currentPosition);  // Calculate PID output
+    
+    LeftDrive.spin(vex::directionType::fwd, output, vex::voltageUnits::mV);
+    RightDrive.spin(vex::directionType::fwd, output, vex::voltageUnits::mV);
+    
+    // Check if the robot is close enough to the target distance
+    if (fabs(targetDistance - currentPosition) < 10) {
+      LeftDrive.stop();
+      RightDrive.stop();
+      break;  // Exit loop when close to target
     }
+    
+    vex::task::sleep(20);  // Sleep for a short delay
+  }
+}
 
-    // Stop motors
-    LeftDrive.stop();
-    RightDrive.stop();
+// Turn to a specific angle
+void PIDTurn(double angle) {
+  while (true) {
+    double currentAngle = inertialSensor.rotation();  // Get current rotation
+    double output = pidTurnControl(angle, currentAngle);  // Calculate PID output
+    
+    LeftDrive.spin(vex::directionType::fwd, -output, vex::voltageUnits::mV);  // Reverse motor on one side to turn
+    RightDrive.spin(vex::directionType::fwd, output, vex::voltageUnits::mV);
+    
+    // Check if the robot is close enough to the target angle
+    if (fabs(targetAngle - currentAngle) < 5) {
+      LeftDrive.stop();
+      RightDrive.stop();
+      break;  // Exit loop when close to target
+    }
+    
+    vex::task::sleep(20);  // Sleep for a short delay
+  }
 }
 
 
 ///////AUTON PATHS///////
 
 void skillsAuton() {
-  PIDDrive(10, 2);
+  PIDDrive(10);
 }
 
 void redNegativeAuton() {
