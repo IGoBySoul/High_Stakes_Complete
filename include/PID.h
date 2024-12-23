@@ -17,6 +17,9 @@ double kP_turn = 0.5;
 double kI_turn = 0.0;
 double kD_turn = 0.1;
 
+// Tolerance for stopping the loop
+const double tolerance = 0.5; // Adjust as needed
+
 // Function to drive straight
 void PIDDrive(double targetDistance, double maxSpeed) {
   double error = 0;
@@ -34,7 +37,7 @@ void PIDDrive(double targetDistance, double maxSpeed) {
   rightMotorB.resetPosition();
   rightMotorC.resetPosition();
 
-  while (currentDistance < targetDistance) {
+  while (fabs(error) > tolerance) {
     // Calculate the average distance in inches
     double leftDistance = ((leftMotorA.position(degrees) + leftMotorB.position(degrees) + leftMotorC.position(degrees)) / 3.0) / 360.0 * wheelCircumference;
     double rightDistance = ((rightMotorA.position(degrees) + rightMotorB.position(degrees) + rightMotorC.position(degrees)) / 3.0) / 360.0 * wheelCircumference;
@@ -106,4 +109,15 @@ void PIDTurn(double targetAngle, double maxSpeed) {
   // Stop the motors
   LeftDrive.stop();
   RightDrive.stop();
+}
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+
+  // Example usage
+  PIDDrive(24, 50); // Drive forward 24 inches at 50% speed
+  PIDTurn(90, 50); // Turn to 90 degrees at 50% speed
+
+  return 0;
 }
