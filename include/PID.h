@@ -48,13 +48,16 @@ void PIDDrive(double targetDistance, double maxSpeed) {
 
     double motorSpeed = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
 
+    // Correction to avoid drifting
+    double correction = (leftDistance - rightDistance) * 0.1; // Adjust the correction factor as needed
+
     // Limit motor speed
     if (motorSpeed > maxSpeed) motorSpeed = maxSpeed;
     if (motorSpeed < -maxSpeed) motorSpeed = -maxSpeed;
 
-    // Set motor speeds
-    LeftDrive.spin(forward, motorSpeed, percent);
-    RightDrive.spin(forward, motorSpeed, percent);
+    // Set motor speeds with correction
+    LeftDrive.spin(forward, motorSpeed - correction, percent);
+    RightDrive.spin(forward, motorSpeed + correction, percent);
 
     // Small delay to prevent CPU overload
     task::sleep(20);
