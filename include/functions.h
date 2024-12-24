@@ -1,7 +1,5 @@
 #include "variables.h"
 
-
-
 void LBSpinUp(double targetAngle) {
   LBMech.spin(reverse, 100, percent);
   waitUntil(rotationSensor.position(degrees) >= targetAngle);
@@ -42,15 +40,15 @@ void colorSort(){
     Controller.Screen.print("Sorting Enabled!");
     if (teamColor == 1 /*red*/) {
       if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
-        LBSpinUp(15);
-        wait(200, msec);
-        LBSpinDown(15);
+        LBSpinUp(6);
+        wait(20, msec);
+        LBSpinDown(6);
       }
     } else if (teamColor == 2 /*blue*/) {
       if (opticalSensor.color() == red && opticalSensor.isNearObject()){
-        LBSpinUp(15);
-        wait(200, msec);
-        LBSpinDown(15);
+        LBSpinUp(6);
+        wait(20, msec);
+        LBSpinDown(6);
       }
     }
   } else if (colorSortBool == false) {
