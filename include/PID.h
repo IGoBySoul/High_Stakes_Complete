@@ -3,17 +3,13 @@
 #include <algorithm>
 
 
-// Set the brake type for the drivetrain
-LeftDrive.setStopping(brakeType::brake);
-RightDrive.setStopping(brakeType::brake);
-
 // Wheel diameter in inches
 const double wheelDiameter = 3.25;
 const double wheelCircumference = wheelDiameter * M_PI;
 
 // PID constants for driving
 double kP_drive = 5;
-double kI_drive = 0.034;
+double kI_drive = 3;
 double kD_drive = 0.2;
 
 // PID constants for turning
