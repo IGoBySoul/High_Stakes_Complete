@@ -20,6 +20,9 @@ double kD_turn = 0.1;
 // Tolerance for stopping the loop
 const double tolerance = 0.2; // Adjust as needed
 
+// Maximum integral term to prevent windup
+const double maxIntegral = 1000.0; // Adjust as needed
+
 // Function to drive straight
 void PIDDrive(double targetDistance, double maxSpeed) {
   double error = targetDistance;
@@ -48,6 +51,8 @@ void PIDDrive(double targetDistance, double maxSpeed) {
     // PID calculations
     error = targetDistance - currentDistance;
     integral += error;
+    if (integral > maxIntegral) integral = maxIntegral;
+    if (integral < -maxIntegral) integral = -maxIntegral;
     derivative = error - prevError;
     prevError = error;
 
