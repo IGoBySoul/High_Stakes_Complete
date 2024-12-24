@@ -9,8 +9,8 @@ const double wheelCircumference = wheelDiameter * M_PI;
 
 // PID constants for driving
 double kP_drive = 5;
-double kI_drive = 3;
-double kD_drive = 0.2;
+double kI_drive = 0.1; // Adjusted for better responsiveness
+double kD_drive = 0.5; // Adjusted for better responsiveness
 
 // PID constants for turning
 double kP_turn = 0.5;
@@ -50,6 +50,11 @@ void PIDDrive(double targetDistance, double maxSpeed) {
     integral += error;
     derivative = error - prevError;
     prevError = error;
+
+    // Print debug information
+    Brain.Screen.printAt(10, 40, "Error: %f", error);
+    Brain.Screen.printAt(10, 60, "Integral: %f", integral);
+    Brain.Screen.printAt(10, 80, "Derivative: %f", derivative);
 
     double motorSpeed = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
 
