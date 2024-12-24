@@ -55,6 +55,7 @@ void PIDDrive(double targetDistance, double maxSpeed) {
     Brain.Screen.printAt(10, 40, "Error: %f", error);
     Brain.Screen.printAt(10, 60, "Integral: %f", integral);
     Brain.Screen.printAt(10, 80, "Derivative: %f", derivative);
+    Brain.Screen.printAt(10, 100, "Current Distance: %f", currentDistance);
 
     double motorSpeed = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
 
