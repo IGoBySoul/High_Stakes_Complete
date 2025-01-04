@@ -26,8 +26,6 @@ void autonCode(void) {
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
   LBMech.setVelocity(100, percent);
-  Drivetrain.setDriveVelocity(25, percent);
-  Drivetrain.setTurnVelocity(25, percent);
   Drivetrain.setStopping(brake);
   MogoClamp.set(false);
 
@@ -35,36 +33,36 @@ void autonCode(void) {
   if (aselection == 0) {
     //do nothing
   } else if (aselection == 1) { //red negative auton
-    teamColor = 1;
+    //teamColor = 1;
     redNegativeAuton();
   } else if (aselection == 2) { //blue negative auton
-    teamColor = 2;
+    //teamColor = 2;
     blueNegativeAuton();
   } else if (aselection == 3) { //red positive auton
-    teamColor = 1;
+    //teamColor = 1;
     redPositiveAuton();
   } else if (aselection == 4) { //blue positive auton
-    teamColor = 2;
+    //teamColor = 2;
     bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
-    teamColor = 3;
+    //teamColor = 3;
     skillsAuton();
   } else if (aselection == 6) { //red neg elims auton
-    teamColor = 1;
+    //teamColor = 1;
     redNegativeElimsAuto();
   } else if (aselection == 7) { //blue neg elims auton
-    teamColor = 2;
+    //teamColor = 2;
     blueNegativeElimsAuto();
   } else if (aselection == 8) { //red pos elims auton
-    teamColor = 1;
+    //teamColor = 1;
     redPositiveElimsAuto();
   } else if (aselection == 9) { //blue pos elims auton
-    teamColor = 2;
+    //teamColor = 2;
     bluePositiveElimsAuto();
   }
 
   while(true){
-    colorSort();
+    //liftHardstop();
   }
 }
 
@@ -76,8 +74,7 @@ void driverControl(void) {
   Controller.ButtonL2.pressed(liftMacro);
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
-  Controller.ButtonB.pressed(toggleSorting);
-  Controller.ButtonDown.pressed(liftHalf);
+  //Controller.ButtonB.pressed(toggleSorting);
   Controller.ButtonRight.pressed(liftRedo);
   Drivetrain.setStopping(brake);
   LBMech.setStopping(hold);
@@ -85,10 +82,11 @@ void driverControl(void) {
   LBMech.setVelocity(75, percent);
   
   
-  while(1){ //use this section to continually look for conditions (check if controller button is pressed, check state of motor, etc)
+  while(true){
     inputCurve();
     intakeConstant();
-    colorSort();
+    //colorSort();
+    //liftHardstop();
 
     this_thread::sleep_for(20);
   }
@@ -221,13 +219,13 @@ int main() {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   rotationSensor.resetPosition();
-  inertialSensor.resetRotation();
+  /*inertialSensor.resetRotation();
   inertialSensor.calibrate();
   while (inertialSensor.isCalibrating()) {
     wait(50, msec);
   }
-  inertialSensor.resetRotation();
-  opticalSensor.setLight(ledState::on);
+  inertialSensor.resetRotation();*/
+  //opticalSensor.setLight(ledState::on);
   rotationSensor.setPosition(5, degrees);
 
   //competition setup

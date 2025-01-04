@@ -1,5 +1,6 @@
 #include "variables.h"
 
+
 void LBSpinUp(double targetAngle) {
   LBMech.spin(reverse, 100, percent);
   waitUntil(rotationSensor.position(degrees) >= targetAngle);
@@ -18,14 +19,22 @@ void liftMacro() {
       LBSpinUp(18);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBSpinUp(135);
+    LBSpinUp(130);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
     LBSpinDown(5);
   }
 }
 
-void toggleSorting() {
+/*void liftHardstop() {
+  if (rotationSensor.position(degrees) >= 133) {
+    LBMech.spin(forward, 100, percent);
+    waitUntil(rotationSensor.position(degrees) <= 130);
+    LBMech.stop(); 
+  }
+}*/
+
+/*void toggleSorting() {
   if (colorSortBool == true) {
     colorSortBool = false;
   } else if (colorSortBool == false) {
@@ -38,17 +47,17 @@ void colorSort(){
     Controller.Screen.clearScreen();
     Controller.Screen.setCursor(1, 1);
     Controller.Screen.print("Sorting Enabled!");
-    if (teamColor == 1 /*red*/) {
+    if (teamColor == 1) {
       if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
-        LBSpinUp(6);
-        wait(20, msec);
-        LBSpinDown(6);
+        LBSpinUp(7);
+        wait(1000, msec);
+        LBSpinDown(1);
       }
-    } else if (teamColor == 2 /*blue*/) {
+    } else if (teamColor == 2 ) {
       if (opticalSensor.color() == red && opticalSensor.isNearObject()){
-        LBSpinUp(6);
-        wait(20, msec);
-        LBSpinDown(6);
+        LBSpinUp(7);
+        wait(1000, msec);
+        LBSpinDown(1);
       }
     }
   } else if (colorSortBool == false) {
@@ -56,7 +65,8 @@ void colorSort(){
     Controller.Screen.setCursor(1, 1);
     Controller.Screen.print("Sorting Disabled!");
   }
-}
+}*/
+
 int curveJoystick(bool red, int input, double t){
   int val = 0;
   if(red){
@@ -69,22 +79,16 @@ int curveJoystick(bool red, int input, double t){
 
 // Define some macros
 void printTeamLogo() {
-  if (aselection == 0) {
+  if (teamColor == 0) {
+    Brain.Screen.setPenColor(white);
+    Brain.Screen.setFillColor(black);
+  } else if (teamColor == 1) {
     Brain.Screen.setPenColor(red);
     Brain.Screen.setFillColor(black);
-  } else if (aselection == 1) {
-    Brain.Screen.setPenColor(red);
-    Brain.Screen.setFillColor(black);
-  } else if (aselection == 2) {
+  } else if (teamColor == 2) {
     Brain.Screen.setPenColor(blue);
     Brain.Screen.setFillColor(black);
-  } else if (aselection == 3) {
-    Brain.Screen.setPenColor(red);
-    Brain.Screen.setFillColor(black);
-  } else if (aselection == 4) {
-    Brain.Screen.setPenColor(blue);
-    Brain.Screen.setFillColor(black);
-  } else if (aselection == 5) {
+  } else if (teamColor == 3) {
     Brain.Screen.setPenColor(yellow);
     Brain.Screen.setFillColor(black);
   }

@@ -2,36 +2,34 @@
 #include "vex.h"
 #include <algorithm>
 
-
+const double PIConstant = 3.1415926535;
 // Wheel diameter in inches
 const double wheelDiameter = 3.25;
-const double wheelCircumference = wheelDiameter * M_PI;
+const double wheelCircumference = wheelDiameter * PIConstant;
 
 // PID constants for driving
-double kP_drive = 8;
-double kI_drive = 0.1;
-double kD_drive = 0.5;
+double kP_drive = 1.0;
+double kI_drive = 0.0;
+double kD_drive = 0.0;
 
 // PID constants for turning
-double kP_turn = 0.5;
+double kP_turn = 1.0;
 double kI_turn = 0.0;
-double kD_turn = 0.1;
+double kD_turn = 0.0;
 
 // Tolerance for stopping the loop
 const double tolerance = 0.2; // Adjust as needed
 
 // Maximum integral term to prevent windup
-const double maxIntegral = 1000.0; // Adjust as needed
+const double maxIntegral = 100000.0; // Adjust as needed
 
 // Function to drive straight
-void PIDDrive(double targetDistance, double maxSpeed) {
+void DrivePID(double targetDistance, double maxSpeed) {
   double error = targetDistance;
   double prevError = 0;
   double integral = 0;
   double derivative = 0;
   double currentDistance = 0;
-  double currentSpeed = 0;
-  const double accelerationRate = 0.9; // Adjust as needed
 
   // Reset sensors
   inertialSensor.resetRotation();
@@ -51,8 +49,11 @@ void PIDDrive(double targetDistance, double maxSpeed) {
     // PID calculations
     error = targetDistance - currentDistance;
     integral += error;
+
+    // Bound the integral to prevent windup
     if (integral > maxIntegral) integral = maxIntegral;
     if (integral < -maxIntegral) integral = -maxIntegral;
+
     derivative = error - prevError;
     prevError = error;
 
@@ -64,19 +65,9 @@ void PIDDrive(double targetDistance, double maxSpeed) {
 
     double motorSpeed = (kP_drive * error) + (kI_drive * integral) + (kD_drive * derivative);
 
-    // Ramp-up mechanism
-    if (currentSpeed < maxSpeed) {
-      currentSpeed += accelerationRate;
-      if (currentSpeed > maxSpeed) {
-        currentSpeed = maxSpeed;
-      }
-    } else {
-      currentSpeed = maxSpeed;
-    }
-
-    // Limit motor speed
-    if (motorSpeed > currentSpeed) motorSpeed = currentSpeed;
-    if (motorSpeed < -currentSpeed) motorSpeed = -currentSpeed;
+    // Limit motor speed to the maxSpeed
+    if (motorSpeed > maxSpeed) motorSpeed = maxSpeed;
+    if (motorSpeed < -maxSpeed) motorSpeed = -maxSpeed;
 
     // Correction to avoid drifting
     double correction = (leftDistance - rightDistance) * 0.1; // Adjust the correction factor as needed
@@ -94,8 +85,9 @@ void PIDDrive(double targetDistance, double maxSpeed) {
   RightDrive.stop(brakeType::brake);
 }
 
+
 // Function to turn to a specific angle
-void PIDTurn(double targetAngle, double maxSpeed) {
+void TurnPID(double targetAngle, double maxSpeed) {
   double error = 0;
   double prevError = 0;
   double integral = 0;

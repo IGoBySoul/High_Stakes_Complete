@@ -3,7 +3,7 @@
 
 int liftMacroVar = 1;
 bool colorSortBool = true;
-int teamColor = 1; //1 == red, 2 == blue
+int teamColor = 0; //1 == red, 2 == blue
 
 int doinkCount = 0;
 int intakeLiftCount = 0;
