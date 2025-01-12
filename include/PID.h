@@ -4,24 +4,24 @@
 
 const double PIConstant = 3.1415926535;
 // Wheel diameter in inches
-const double wheelDiameter = 3.25;
+const double wheelDiameter = 3.1;
 const double wheelCircumference = wheelDiameter * PIConstant;
 
 // PID constants for driving
-double kP_drive = 1.0;
+double kP_drive = 11.5;
 double kI_drive = 0.0;
-double kD_drive = 0.0;
+double kD_drive = 0.5;
 
 // PID constants for turning
-double kP_turn = 1.0;
+double kP_turn = 0.5;
 double kI_turn = 0.0;
-double kD_turn = 0.0;
+double kD_turn = 0.04;
 
 // Tolerance for stopping the loop
-const double tolerance = 0.2; // Adjust as needed
+const double tolerance = 0.15; // Adjust as needed
 
 // Maximum integral term to prevent windup
-const double maxIntegral = 100000.0; // Adjust as needed
+const double maxIntegral = 1000000000.0; // Adjust as needed
 
 // Function to drive straight
 void DrivePID(double targetDistance, double maxSpeed) {
@@ -30,6 +30,7 @@ void DrivePID(double targetDistance, double maxSpeed) {
   double integral = 0;
   double derivative = 0;
   double currentDistance = 0;
+  double targetPercent = targetDistance + ((targetDistance/100) * 17.33);
 
   // Reset sensors
   inertialSensor.resetRotation();
@@ -47,7 +48,7 @@ void DrivePID(double targetDistance, double maxSpeed) {
     currentDistance = (leftDistance + rightDistance) / 2.0;
 
     // PID calculations
-    error = targetDistance - currentDistance;
+    error = targetPercent - currentDistance;
     integral += error;
 
     // Bound the integral to prevent windup

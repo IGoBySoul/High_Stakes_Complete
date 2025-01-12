@@ -16,14 +16,21 @@ void LBSpinDown(double targetAngle) {
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpinUp(18);
+      LBSpinUp(13);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBSpinUp(130);
+    LBSpinUp(120);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
-    LBSpinDown(5);
+    LBSpinDown(3);
   }
+}
+
+void liftReset() {
+  LBSpinDown(0);
+  wait(500, msec);
+  rotationSensor.resetPosition();
+  rotationSensor.setPosition(5, degrees);
 }
 
 /*void liftHardstop() {
@@ -120,16 +127,6 @@ void doinkCode() {
   } else {
     Doinker.set(false);
   }
-}
-
-void liftRedo() {
-  liftMacroVar = 2;
-  LBSpinDown(45);
-}
-
-void liftHalf() {
-  liftMacroVar = 2;
-  LBSpinUp(90);
 }
 
 void inputCurve() {

@@ -75,11 +75,10 @@ void driverControl(void) {
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
   //Controller.ButtonB.pressed(toggleSorting);
-  Controller.ButtonRight.pressed(liftRedo);
   Drivetrain.setStopping(brake);
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
-  LBMech.setVelocity(75, percent);
+  LBMech.setVelocity(65, percent);
   
   
   while(true){
