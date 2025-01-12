@@ -16,7 +16,7 @@ void LBSpinDown(double targetAngle) {
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpinUp(13);
+      LBSpinUp(8);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
     LBSpinUp(120);
@@ -33,44 +33,25 @@ void liftReset() {
   rotationSensor.setPosition(5, degrees);
 }
 
-/*void liftHardstop() {
-  if (rotationSensor.position(degrees) >= 133) {
-    LBMech.spin(forward, 100, percent);
-    waitUntil(rotationSensor.position(degrees) <= 130);
-    LBMech.stop(); 
+void colorSort() {
+  if (teamColor == 1){
+    if (opticalSensor.color() == blue && opticalSensor.isNearObject()) {
+      IntakeMotor.spinFor(forward, 0.3, seconds);
+      wait(500, msec);
+    }
+  } else if (teamColor == 2) {
+    if (opticalSensor.color() == red && opticalSensor.isNearObject()) {
+      IntakeMotor.spinFor(forward, 0.3, seconds);
+      wait(500, msec);
+    }
   }
-}*/
+}
 
 /*void toggleSorting() {
   if (colorSortBool == true) {
     colorSortBool = false;
   } else if (colorSortBool == false) {
     colorSortBool = true;
-  }
-}
-
-void colorSort(){
-  if (colorSortBool == true) {
-    Controller.Screen.clearScreen();
-    Controller.Screen.setCursor(1, 1);
-    Controller.Screen.print("Sorting Enabled!");
-    if (teamColor == 1) {
-      if (opticalSensor.color() == blue && opticalSensor.isNearObject()){
-        LBSpinUp(7);
-        wait(1000, msec);
-        LBSpinDown(1);
-      }
-    } else if (teamColor == 2 ) {
-      if (opticalSensor.color() == red && opticalSensor.isNearObject()){
-        LBSpinUp(7);
-        wait(1000, msec);
-        LBSpinDown(1);
-      }
-    }
-  } else if (colorSortBool == false) {
-    Controller.Screen.clearScreen();
-    Controller.Screen.setCursor(1, 1);
-    Controller.Screen.print("Sorting Disabled!");
   }
 }*/
 

@@ -33,36 +33,32 @@ void autonCode(void) {
   if (aselection == 0) {
     //do nothing
   } else if (aselection == 1) { //red negative auton
-    //teamColor = 1;
+    teamColor = 1;
     redNegativeAuton();
   } else if (aselection == 2) { //blue negative auton
-    //teamColor = 2;
+    teamColor = 2;
     blueNegativeAuton();
   } else if (aselection == 3) { //red positive auton
-    //teamColor = 1;
+    teamColor = 1;
     redPositiveAuton();
   } else if (aselection == 4) { //blue positive auton
-    //teamColor = 2;
+    teamColor = 2;
     bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
-    //teamColor = 3;
+    teamColor = 3;
     skillsAuton();
   } else if (aselection == 6) { //red neg elims auton
-    //teamColor = 1;
+    teamColor = 1;
     redNegativeElimsAuto();
   } else if (aselection == 7) { //blue neg elims auton
-    //teamColor = 2;
+    teamColor = 2;
     blueNegativeElimsAuto();
   } else if (aselection == 8) { //red pos elims auton
-    //teamColor = 1;
+    teamColor = 1;
     redPositiveElimsAuto();
   } else if (aselection == 9) { //blue pos elims auton
-    //teamColor = 2;
+    teamColor = 2;
     bluePositiveElimsAuto();
-  }
-
-  while(true){
-    //liftHardstop();
   }
 }
 
@@ -75,16 +71,17 @@ void driverControl(void) {
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
   //Controller.ButtonB.pressed(toggleSorting);
+  colorSortBool = true;
   Drivetrain.setStopping(brake);
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
-  LBMech.setVelocity(65, percent);
+  LBMech.setVelocity(25, percent);
   
   
   while(true){
     inputCurve();
     intakeConstant();
-    //colorSort();
+    colorSort();
     //liftHardstop();
 
     this_thread::sleep_for(20);
@@ -132,17 +129,21 @@ int main() {
       else if (ColorChosen == 1){
         if(redNeg.pressing()){
           aselection = 1;
+          teamColor = 1;
           drawTonomous();
         }
         else if (redPos.pressing()){
+          teamColor = 1;
           aselection = 3;
           drawTonomous();
         }
         else if (redNegElims.pressing()) {
+          teamColor = 1;
           aselection = 6;
           drawTonomous();
         }
         else if (redPosElims.pressing()) {
+          teamColor = 1;
           aselection = 8;
           drawTonomous();
         }
@@ -150,18 +151,22 @@ int main() {
       else if (ColorChosen == 2){
         if(blueNeg.pressing()){
           aselection = 2;
+          teamColor = 2;
           drawTonomous();
         }
         else if (bluePos.pressing()){
           aselection = 4;
+          teamColor = 2;
           drawTonomous();
         }
         else if (blueNegElims.pressing()) {
           aselection = 7;
+          teamColor = 2;
           drawTonomous();
         }
         else if (bluePosElims.pressing()) {
           aselection = 9;
+          teamColor = 2;
           drawTonomous();
         }
 
@@ -225,7 +230,7 @@ int main() {
   }
   inertialSensor.resetRotation();*/
   //opticalSensor.setLight(ledState::on);
-  rotationSensor.setPosition(5, degrees);
+  opticalSensor.setLight(ledState::on);
 
   //competition setup
   competition Competition;
