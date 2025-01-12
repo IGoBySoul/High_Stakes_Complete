@@ -22,6 +22,7 @@ using namespace vex;
 
 //AUTON CODE//
 void autonCode(void) {
+  autonActive = true;
   printTeamLogo();
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
@@ -33,32 +34,29 @@ void autonCode(void) {
   if (aselection == 0) {
     //do nothing
   } else if (aselection == 1) { //red negative auton
-    teamColor = 1;
     redNegativeAuton();
   } else if (aselection == 2) { //blue negative auton
-    teamColor = 2;
     blueNegativeAuton();
   } else if (aselection == 3) { //red positive auton
-    teamColor = 1;
     redPositiveAuton();
   } else if (aselection == 4) { //blue positive auton
-    teamColor = 2;
     bluePositiveAuton();
   } else if (aselection == 5) { //skills auton
-    teamColor = 3;
     skillsAuton();
   } else if (aselection == 6) { //red neg elims auton
-    teamColor = 1;
     redNegativeElimsAuto();
   } else if (aselection == 7) { //blue neg elims auton
-    teamColor = 2;
     blueNegativeElimsAuto();
   } else if (aselection == 8) { //red pos elims auton
-    teamColor = 1;
     redPositiveElimsAuto();
   } else if (aselection == 9) { //blue pos elims auton
-    teamColor = 2;
     bluePositiveElimsAuto();
+  }
+
+  autonActive = false;
+
+  while(autonActive) {
+    colorSort();
   }
 }
 

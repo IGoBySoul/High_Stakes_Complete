@@ -4,9 +4,7 @@
 int liftMacroVar = 1;
 bool colorSortBool = true;
 int teamColor = 0; //1 == red, 2 == blue
-
-int doinkCount = 0;
-int intakeLiftCount = 0;
+bool autonActive = false;
 int aselection = -1;
 
 // Joystick curve
