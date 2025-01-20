@@ -44,7 +44,7 @@ void colorSort() {
       IntakeMotor.spinFor(forward, 0.3, seconds);
       wait(500, msec);
     }
-  }
+  } else {}
 }
 
 /*void toggleSorting() {

@@ -148,14 +148,46 @@ void redPositiveAuton() {
 }
 
 void bluePositiveAuton() {
-  Drivetrain.driveFor(forward, 60, inches, 400, rpm, false);
-  wait(300, msec);
+  Drivetrain.driveFor(forward, 51.75, inches, 400, rpm, false);
   IntakeMotor.spin(forward);
+  wait(100, msec);
   Doinker.set(true);
-  wait(600, msec);
+  wait(550, msec);
   Doinker.set(false);
+  wait(200, msec);
+  DrivePID(-24, 60);
+  wait(200, msec);
+  Doinker.set(true);
+  DrivePID(-3, 50);
   IntakeMotor.stop();
-  Drivetrain.driveFor(reverse, 24, inches, 400, rpm);
+  wait(250, msec);
+  Doinker.set(false);
+  wait(150, msec);
+  TurnPID(195, 35);
+  DrivePID(-27, 60);
+  MogoClamp.set(true);
+  wait(200, msec);
+  IntakeMotor.spin(forward);
+  DrivePID(45, 60);
+  wait(750, msec);
+  IntakeMotor.stop();
+  DrivePID(-14, 55);
+  TurnPID(-215, 35);
+  DrivePID(-16, 55);
+  MogoClamp.set(false);
+  DrivePID(8, 50);
+  TurnPID(-125, 35);
+  DrivePID(-27, 60);
+  MogoClamp.set(true);
+  wait(200, msec);
+  DrivePID(8, 50);
+  IntakeMotor.spin(forward);
+  wait(1500, msec);
+  IntakeMotor.stop();
+  TurnPID(-105, 35);
+  Drivetrain.drive(forward, 400, rpm);
+  wait(1000, msec);
+  Drivetrain.stop();
 }
 
 void redNegativeElimsAuto() {

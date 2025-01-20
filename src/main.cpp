@@ -23,6 +23,7 @@ using namespace vex;
 //AUTON CODE//
 void autonCode(void) {
   autonActive = true;
+  colorSortBool = true;
   printTeamLogo();
   LBMech.setStopping(hold);
   IntakeMotor.setVelocity(100, percent);
@@ -53,9 +54,7 @@ void autonCode(void) {
     bluePositiveElimsAuto();
   }
 
-  autonActive = false;
-
-  while(autonActive) {
+  while(autonActive == true) {
     colorSort();
   }
 }
@@ -64,6 +63,7 @@ void autonCode(void) {
 ///DRIVER CONTROL///
 void driverControl(void) {
   //simple stuff really
+  autonActive = false;
   printTeamLogo();
   Controller.ButtonL2.pressed(liftMacro);
   Controller.ButtonY.pressed(doinkCode);
@@ -79,7 +79,7 @@ void driverControl(void) {
   while(true){
     inputCurve();
     intakeConstant();
-    colorSort();
+    //colorSort();
     //liftHardstop();
 
     this_thread::sleep_for(20);
@@ -233,5 +233,6 @@ int main() {
   //competition setup
   competition Competition;
   Competition.autonomous(autonCode);
+  autonActive = false;
   Competition.drivercontrol(driverControl);
 }
