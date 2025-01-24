@@ -38,11 +38,13 @@ void colorSort() {
     if (opticalSensor.color() == blue && opticalSensor.isNearObject()) {
       IntakeMotor.spinFor(forward, 0.3, seconds);
       wait(500, msec);
+      IntakeMotor.spinFor(forward, 0.1, seconds);
     }
   } else if (teamColor == 2) { //blue team
     if (opticalSensor.hue() < 12 && opticalSensor.isNearObject()) {
       IntakeMotor.spinFor(forward, 0.3, seconds);
       wait(500, msec);
+      IntakeMotor.spinFor(forward, 0.1, seconds);
     }
   } else {}
 }

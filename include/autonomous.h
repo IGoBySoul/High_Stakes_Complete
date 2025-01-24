@@ -119,10 +119,89 @@ void skillsAuton() {
 
   //GREEN PATH//
 
+  DrivePID(48, 50);
+  IntakeMotor.spin(forward);
+  DrivePID(24, 50);
+
+  TurnPID(55, 35);
+  IntakeMotor.stop();
+  DrivePID(54, 50);
+  TurnPID(125, 35);
+  DrivePID(-10, 35);
+  IntakeMotor.spin(forward);
+  wait(2000, msec);
+  IntakeMotor.stop();
+  Drivetrain.drive(reverse);
+  wait(500, msec);
+  Drivetrain.stop();
+  DrivePID(10, 35);
+
+  TurnPID(-90, 35);
+  DrivePID(-24, 25);
+  MogoClamp.set(true);
+
+  wait(250, msec);
+  TurnPID(-180, 35);
+  IntakeMotor.spin(forward);
+  DrivePID(24, 50);
+  wait(500, msec);
+  IntakeMotor.stop();
+
+  TurnPID(-145,35);
+  DrivePID(-16, 35);
+  MogoClamp.set(false);
+  DrivePID(16, 35);
+
+  //PURPLE PATH//
+
+  TurnPID(-180, 35);
+  DrivePID(-51, 50);
+  MogoClamp.set(true);
+  wait(250, msec);
+
+  TurnPID(-165, 35);
+  IntakeMotor.spin(forward);
+  DrivePID(27, 50);
+
+  TurnPID(-45, 35);
+  DrivePID(24, 50);
+  wait(500, msec);
+
+  TurnPID(-90, 35);
+  DrivePID(24, 50);
+
+  TurnPID(90, 35);
+  DrivePID(8, 35);
+  wait(1000, msec);
+  
+  TurnPID(115, 35);
+  IntakeMotor.stop();
+  DrivePID(-16, 35);
+  MogoClamp.set(false);
 }
 
 void redNegativeAuton() {
-  
+  DrivePID(-24, 50);
+  MogoClamp.set(true);
+  wait(200, msec);
+  IntakeMotor.spin(forward);
+  TurnPID(135, 27.5);
+  DrivePID(21, 35);
+  TurnPID(-27.5, 25);
+  wait(400, msec);
+  DrivePID(-7.5, 35);
+  wait(250, msec);
+  DrivePID(-10, 35);
+  TurnPID(20, 25);
+  DrivePID(-7, 35);
+  TurnPID(-55, 25);
+  DrivePID(18, 35);
+  TurnPID(-155, 35);
+  wait(1000, msec);
+  Drivetrain.drive(forward, 300, rpm);
+  wait(1250, msec);
+  Drivetrain.stop();
+  IntakeMotor.stop();
 }
 
 void blueNegativeAuton() {
@@ -150,6 +229,46 @@ void blueNegativeAuton() {
 }
 
 void redPositiveAuton() {
+  Drivetrain.driveFor(forward, 53.25, inches, 400, rpm, false);
+  IntakeMotor.spin(forward);
+  wait(100, msec);
+  Doinker.set(true);
+  wait(550, msec);
+  Doinker.set(false);
+  wait(200, msec);
+  DrivePID(-26, 50);
+  IntakeMotor.stop();
+  wait(200, msec);
+  Doinker.set(true);
+  wait(200, msec);
+  DrivePID(-3, 50);
+  wait(250, msec);
+  Doinker.set(false);
+  wait(150, msec);
+  TurnPID(-189, 35);
+  Drivetrain.driveFor(reverse, 35, inches, 175, rpm);
+  MogoClamp.set(true);
+  wait(200, msec);
+  IntakeMotor.spin(forward);
+  DrivePID(45, 60);
+  wait(350, msec);
+  DrivePID(-14, 55);
+  IntakeMotor.stop();
+  TurnPID(180, 40);
+  MogoClamp.set(false);
+  DrivePID(5, 50);
+  TurnPID(120, 35);
+  DrivePID(-36, 65);
+  MogoClamp.set(true);
+  wait(250, msec);
+  DrivePID(10, 50);
+  IntakeMotor.spin(forward);
+  wait(1500, msec);
+  IntakeMotor.stop();
+  TurnPID(145, 40);
+  Drivetrain.drive(forward, 300, rpm);
+  wait(1000, msec);
+  Drivetrain.stop();
 }
 
 void bluePositiveAuton() {
@@ -170,7 +289,7 @@ void bluePositiveAuton() {
   Doinker.set(false);
   wait(150, msec);
   TurnPID(189, 35);
-  Drivetrain.driveFor(reverse, 35, inches, 300, rpm);
+  Drivetrain.driveFor(reverse, 35, inches, 175, rpm);
   MogoClamp.set(true);
   wait(200, msec);
   IntakeMotor.spin(forward);
