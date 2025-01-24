@@ -29,6 +29,8 @@ void autonCode(void) {
   IntakeMotor.setVelocity(100, percent);
   LBMech.setVelocity(100, percent);
   Drivetrain.setStopping(brake);
+  Drivetrain.setDriveVelocity(40, percent);
+  Drivetrain.setTurnVelocity(27.5, percent);
   MogoClamp.set(false);
 
 
