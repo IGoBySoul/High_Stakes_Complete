@@ -13,9 +13,9 @@ double kI_drive = 0.0;
 double kD_drive = 0.1;
 
 // PID constants for turning
-double kP_turn = 0.55;
+double kP_turn = 0.6;
 double kI_turn = 0.0;
-double kD_turn = 0.11;
+double kD_turn = 0.12;
 
 // Tolerance for stopping the loop
 const double tolerance = 0.2; // Adjust as needed
