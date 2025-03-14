@@ -13,10 +13,18 @@ void LBSpinDown(double targetAngle) {
   LBMech.stop(); 
 }
 
+void LBSpinTo(double targetAngle) {
+  if (rotationSensor.position(degrees) < targetAngle or rotationSensor.position(degrees) > 300) {
+    LBMech.spin(reverse, 100, percent);
+    waitUntil(rotationSensor.position(degrees) >= targetAngle);
+    LBMech.stop();
+  }
+}
+
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpinUp(8);
+      LBSpinUp(20);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
     LBSpinUp(120);
@@ -65,7 +73,7 @@ int curveJoystick(bool red, int input, double t){
   return val;
 }
 
-// Define some macros
+
 void printTeamLogo() {
   if (teamColor == 0) {
     Brain.Screen.setPenColor(white);
@@ -110,6 +118,22 @@ void doinkCode() {
   }
 }
 
+void doinkClampLeftCode() {
+  if (Doinker.value() == false) {
+    doinkClampLeft.set(true);
+  } else {
+    doinkClampLeft.set(false);
+  }
+}
+
+void doinkClampRightCode() {
+  if (Doinker.value() == false) {
+    doinkClampRight.set(true);
+  } else {
+    doinkClampRight.set(false);
+  }
+}
+
 void inputCurve() {
   double turnVal = curveJoystick(false, Controller.Axis1.position(percent), turningCurve); //Get curvature according to settings [-100,100]
   double forwardVal = curveJoystick(false, Controller.Axis3.position(percent), forwardCurve); //Get curvature according to settings [-100,100]
@@ -123,9 +147,9 @@ void inputCurve() {
 
 void intakeConstant() {
   if (Controller.ButtonR1.pressing()) {
-    IntakeMotor.spin(forward);
+    IntakeMotor.spin(forward, 100, percent);
   } else if (Controller.ButtonR2.pressing()) {
-    IntakeMotor.spin(reverse);
+    IntakeMotor.spin(reverse, 100, percent  );
   } else {
     IntakeMotor.stop();
   }

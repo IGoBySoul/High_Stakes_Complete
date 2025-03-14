@@ -18,9 +18,8 @@ extern motor LBMech;
 extern optical opticalSensor;
 extern digital_out Doinker;
 extern digital_out MogoClamp;
-extern digital_out IntakeLift;
-extern digital_out Pneu4;
-extern digital_out Pneu5;
+extern digital_out doinkClampLeft;
+extern digital_out doinkClampRight;
 extern inertial inertialSensor;
 extern rotation rotationSensor;
 

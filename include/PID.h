@@ -8,14 +8,14 @@ const double wheelDiameter = 3.1;
 const double wheelCircumference = wheelDiameter * PIConstant;
 
 // PID constants for driving
-double kP_drive = 5.0;
+double kP_drive = 0.0;
 double kI_drive = 0.0;
-double kD_drive = 0.1;
+double kD_drive = 0.0;
 
 // PID constants for turning
-double kP_turn = 0.6;
+double kP_turn = 0.0;
 double kI_turn = 0.0;
-double kD_turn = 0.12;
+double kD_turn = 0.0;
 
 // Tolerance for stopping the loop
 const double tolerance = 0.2; // Adjust as needed

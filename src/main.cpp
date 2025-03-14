@@ -70,6 +70,8 @@ void driverControl(void) {
   Controller.ButtonL2.pressed(liftMacro);
   Controller.ButtonY.pressed(doinkCode);
   Controller.ButtonL1.pressed(MogoCode);
+  Controller.ButtonLeft.pressed(doinkClampLeftCode);
+  Controller.ButtonRight.pressed(doinkClampRightCode);
   //Controller.ButtonB.pressed(toggleSorting);
   colorSortBool = true;
   Drivetrain.setStopping(brake);
@@ -223,6 +225,7 @@ int main() {
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
   rotationSensor.resetPosition();
+  rotationSensor.setPosition(1, degrees);
   /*inertialSensor.resetRotation();
   inertialSensor.calibrate();
   while (inertialSensor.isCalibrating()) {
