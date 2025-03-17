@@ -56,6 +56,8 @@ void autonCode(void) {
     bluePositiveElimsAuto();
   }
 
+  autonActive = false;
+
   while(autonActive == true) {
     colorSort();
   }
@@ -69,9 +71,8 @@ void driverControl(void) {
   printTeamLogo();
   Controller.ButtonL2.pressed(liftMacro);
   Controller.ButtonY.pressed(doinkCode);
+  Controller.ButtonRight.pressed(doinkCode2);
   Controller.ButtonL1.pressed(MogoCode);
-  Controller.ButtonLeft.pressed(doinkClampLeftCode);
-  Controller.ButtonRight.pressed(doinkClampRightCode);
   //Controller.ButtonB.pressed(toggleSorting);
   colorSortBool = true;
   Drivetrain.setStopping(brake);

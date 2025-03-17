@@ -14,7 +14,7 @@ motor leftMotorA = motor(PORT7, ratio6_1, true);
 motor leftMotorB = motor(PORT8, ratio6_1, true);
 motor leftMotorC = motor(PORT10, ratio6_1, true);
 motor_group LeftDrive = motor_group(leftMotorA, leftMotorB, leftMotorC);
-motor rightMotorA = motor(PORT1, ratio6_1, false);
+motor rightMotorA = motor(PORT14, ratio6_1, false);
 motor rightMotorB = motor(PORT4, ratio6_1, false);
 motor rightMotorC = motor(PORT5, ratio6_1, false);
 motor_group RightDrive = motor_group(rightMotorA, rightMotorB, rightMotorC);
@@ -30,8 +30,7 @@ rotation rotationSensor(PORT13);
 //pneumatics
 digital_out MogoClamp = digital_out(Brain.ThreeWirePort.A);
 digital_out Doinker = digital_out(Brain.ThreeWirePort.B);
-digital_out doinkClampLeft = digital_out(Brain.ThreeWirePort.C);
-digital_out doinkClampRight = digital_out(Brain.ThreeWirePort.D);
+digital_out Doinker2 = digital_out(Brain.ThreeWirePort.C);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

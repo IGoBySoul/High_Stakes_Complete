@@ -15,19 +15,21 @@ void LBSpinDown(double targetAngle) {
 
 void LBSpinTo(double targetAngle) {
   if (rotationSensor.position(degrees) < targetAngle or rotationSensor.position(degrees) > 300) {
-    LBMech.spin(reverse, 100, percent);
-    waitUntil(rotationSensor.position(degrees) >= targetAngle);
-    LBMech.stop();
+    LBSpinUp(targetAngle);
+  } else if (rotationSensor.position(degrees) > targetAngle) {
+    LBSpinDown(targetAngle);
+  } else {
+    
   }
 }
 
 void liftMacro() {
   if (liftMacroVar == 1) {
       liftMacroVar = 2;
-      LBSpinUp(20);
+      LBSpinUp(10);
   } else if (liftMacroVar == 2) {
     liftMacroVar = 3;
-    LBSpinUp(120);
+    LBSpinUp(90);
   } else if (liftMacroVar == 3) {
     liftMacroVar = 1;
     LBSpinDown(3);
@@ -118,19 +120,11 @@ void doinkCode() {
   }
 }
 
-void doinkClampLeftCode() {
-  if (Doinker.value() == false) {
-    doinkClampLeft.set(true);
+void doinkCode2() {
+  if (Doinker2.value() == false) {
+    Doinker2.set(true);
   } else {
-    doinkClampLeft.set(false);
-  }
-}
-
-void doinkClampRightCode() {
-  if (Doinker.value() == false) {
-    doinkClampRight.set(true);
-  } else {
-    doinkClampRight.set(false);
+    Doinker2.set(false);
   }
 }
 
