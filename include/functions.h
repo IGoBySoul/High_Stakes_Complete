@@ -46,12 +46,12 @@ void liftReset() {
 void colorSort() {
   if (teamColor == 1){ //red team
     if (opticalSensor.color() == blue && opticalSensor.isNearObject()) {
-      IntakeMotor.spinFor(forward, 0.3, seconds);
+      IntakeMotor.spinFor(forward, 0.1, seconds);
       wait(500, msec);
     }
   } else if (teamColor == 2) { //blue team
     if (opticalSensor.hue() < 12 && opticalSensor.isNearObject()) {
-      IntakeMotor.spinFor(forward, 0.3, seconds);
+      IntakeMotor.spinFor(forward, 0.1, seconds);
       wait(500, msec);
     }
   } else {}
